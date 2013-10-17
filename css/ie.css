@@ -1,0 +1,184 @@
+/* IE9 and lower styles */
+
+
+/* General IE Styles */
+.ie nav ul.topbar-nav li a{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie nav ul.topbar-nav li a:hover{
+	zoom: 1;
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#25ffffff,endColorstr=#25ffffff);
+}
+
+.ie nav.social-media a{
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie section.logo-container h1 a{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie section.logo-container h2{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie section.header-cta-container p{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie nav.header-bottom ul li a{
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie nav.header-bottom ul li a:hover{
+	zoom: 1;
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#25ffffff,endColorstr=#25ffffff);
+}
+
+.ie .block-title, .page-title, #reply-title, .property-search-title{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+.ie .block-main-title{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie .property-search input[type=submit] {
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie #front-page-sidebar .widget_recent_entries ul li a, #front-page-sidebar  .widget_pages ul li a, #front-page-sidebar  .widget_meta ul li a, #front-page-sidebar  .widget_nav_menu ul li a, #front-page-sidebar  .widget_categories ul li a, #front-page-sidebar  .widget_archive ul li a {
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie #front-page-sidebar .social-media-icons{
+	zoom: 1;
+	progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40000000,endColorstr=#40000000);
+}
+
+.ie #front-page-sidebar .social-media-icons a{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie #front-page-sidebar .widget_text .textwidget{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie #front-page-sidebar .featured-content-widget-large h3 a {
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie .agent-social-media {
+	overflow: visible;
+}
+
+.ie .agent-social-media a {
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie .post-navigation a{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40ffffff,endColorstr=#40ffffff);
+}
+
+.ie #sidebar .widgettitle, .footer-block-title, .footer-block-2 .widgettitle{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie #sidebar .widget_recent_entries ul li a, .footer-block-2 ul li a{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie #sidebar .social-media-icons{
+	zoom: 1;
+	progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#40000000,endColorstr=#40000000);
+}
+
+.ie #sidebar .social-media-icons a{
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000);
+}
+
+.ie #sidebar .featured-content-widget-large h3 a, #sidebar .featured-content-widget-medium h3 a, #sidebar .featured-content-widget-small h3 a {
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie footer .social-media-icons a{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+.ie .footer-block-1 .widgettitle{
+	zoom: 1;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.Chroma(Color=#ffffff)
+	        progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#ffffff);
+}
+
+
+/* IE8 */
+.ie8 .footer-block-2 .widget {
+	width: 42%;
+	background: #f6f6f6;
+}
+
+.ie8 .author-thumb {
+	position: relative;
+}
+
+.ie8 .author-thumb img {
+	width: auto;
+	max-height: 90%;
+}
+
+.ie8 .post-navigation .previous-posts, .ie8 .post-navigation .next-posts {
+	width: 50%;
+}
+.ie8 .post-navigation .next-posts {
+	text-align: right;
+}
+
+.ie8 .blog-post-content img {
+	width: auto;
+	height: auto;
+}
