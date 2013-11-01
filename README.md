@@ -1,2 +1,2 @@
-Modern-Real-Estate-Theme
+Modern-Estate-Theme
 ========================
