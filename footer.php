@@ -7,7 +7,7 @@
 
 			<div class="in cf">
 				<section class="footer-blocks footer-block-1">
-					<?php mre_footer_left_sidebar(); // Footer (vertical) ?>
+					<?php me_footer_left_sidebar(); // Footer (vertical) ?>
 				</section>
 
 				<section class="footer-blocks footer-block-2">
@@ -23,7 +23,7 @@
 
 			<section class="copyright">
 				<div class="in">
-					<?php sds_copyright( 'Modern Real Estate' ); ?>
+					<?php sds_copyright( 'Modern Estate' ); ?>
 				</div>
 			</section>
 

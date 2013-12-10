@@ -32,7 +32,7 @@ nav.header-bottom ul li a{
 	color: #ebebeb;
 		text-shadow: 1px 1px 1px #000000;
 }
-nav.header-bottom ul li ul.sub-menu {
+nav.header-bottom ul li ul.sub-menu, nav.header-bottom ul li ul.children {
 	background: #898989;
 }
 .announcement{
@@ -132,6 +132,15 @@ figure.house-thumb:hover:before{
 .breadcrumb a {
 	color: #e6e6e6;
 }
+
+.sticky {
+	background: #d6d8da;
+}
+
+section.news-block.sticky:hover {
+	background: #bfbfbf;
+}
+
 .news-block{
 	background-color: #ebebeb;
 		-webkit-box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, .2);
@@ -155,7 +164,7 @@ section.news-block:hover{
 		-webkit-box-shadow:  inset 2px 2px 2px 1px rgba(0, 0, 0, .2);
 		box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, .2);
 }
-.post-navigation a:hover{
+.post-navigation a:hover, .post-navigation .current{
 	text-decoration: none;
 	background: rgba(0, 0, 0, .8);
 }
@@ -274,22 +283,38 @@ input[type=submit] {
 .copyright a{
 	color: #acacac;
 }
-@media only screen and (min-width: 0px) and (max-width: 600px) {
-nav ul.topbar-nav {
-	background-color: #acacac; /* ---- Color Change ----*/
-	background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
-	background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
-	background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
-	background-image:      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
-	box-shadow: 0 1px 2px rgba(0,0,0,.6);
-}
-nav ul.topbar-nav.open li ul.sub-menu {
+
+/* ----------
+   Newsletter
+ ------------ */
+.mc-gravity .gform_heading, .mc_gravity .gform_heading, .mc-newsletter .gform_heading, .mc_newsletter .gform_heading,
+.mc-gravity_wrapper .gform_heading, .mc_gravity_wrapper .gform_heading, .mc-newsletter_wrapper .gform_heading, .mc_newsletter_wrapper .gform_heading,
+.mc-gravity-confirmation, .mc_gravity-confirmation, .mc-newsletter-confirmation, .mc_newsletter-confirmation {
 	background: #acacac;
 }
-.home-house-block{
-	background-color: #e6e6e6;
+
+@media only screen and (min-width: 0px) and (max-width: 600px) {
+	nav ul.topbar-nav {
+		background-color: #acacac; /* ---- Color Change ----*/
+		background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		box-shadow: 0 1px 2px rgba(0,0,0,.6);
 	}
-aside#property-sidebar section.sidebar-block section.sidebar-top{
-	background-color: #e6e6e6;
-}
+	nav ul.topbar-nav.open li ul.sub-menu {
+		background: #acacac;
+	}
+
+	nav.header-bottom ul.primary-nav {
+		background-color: #898989;
+		background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-image:      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+	}
+
+	nav.header-bottom ul.primary-nav.open li ul.sub-menu {
+		background-color: #898989;
+	}
 }

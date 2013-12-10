@@ -12,7 +12,7 @@ include_once get_template_directory() . '/includes/widget-social-media.php'; // 
 
 include_once get_template_directory() . '/includes/tha-theme-hooks.php'; // Theme Hook Alliance
 
-include_once get_template_directory() . '/includes/ModernRealEstate.php'; // Modern Real Estate Class (main functionality, actions/filters)
+include_once get_template_directory() . '/includes/ModernEstate.php'; // Modern Estate Class (main functionality, actions/filters)
 
 
 /**
@@ -30,7 +30,7 @@ if ( ! isset( $content_width ) )
 /**
  * This function outputs the Footer Sidebar.
  */
-function mre_footer_left_sidebar() {
+function me_footer_left_sidebar() {
 	if ( is_active_sidebar( 'footer-left-sidebar' ) )
 		dynamic_sidebar( 'footer-left-sidebar' );
 }
@@ -51,7 +51,7 @@ if ( ! function_exists( 'sds_color_schemes' ) ) {
 				'label' => 'Gray',
 				'stylesheet' => '/css/gray.css',
 				'preview' => '#acacac',
-				'deps' => 'modern-real-estate'
+				'deps' => 'modern-estate'
 			)
 		);
 
@@ -83,7 +83,7 @@ if ( ! function_exists( 'sds_theme_options_default_featured_image_size' ) ) {
 	add_filter( 'sds_theme_options_default_featured_image_size', 'sds_theme_options_default_featured_image_size' );
 
 	function sds_theme_options_default_featured_image_size( $default ) {
-		return 'mre-200x300';
+		return 'me-200x300';
 	}
 }
 
@@ -93,18 +93,18 @@ if ( ! function_exists( 'sds_theme_options_ads' ) ) {
 	function sds_theme_options_ads() {
 	?>
 		<div class="sds-theme-options-ad">
-			<a href="http://slocumstudio.com/wordpress-themes/modern-real-estate?utm_medium=options-panel-plug&amp;utm_campaign=WordPressThemes" target="_blank" class="sds-theme-options-upgrade-ad">
-				<h2><?php _e( 'Upgrade to Modern Real Estate Pro!', 'modern-real-estate' ); ?></h2>
+			<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank" class="sds-theme-options-upgrade-ad">
+				<h2><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h2>
 				<ul>
-					<li><?php _e( 'Priority Ticketing Support', 'modern-real-estate' ); ?></li>
-					<li><?php _e( 'More Color Schemes', 'modern-real-estate' ); ?></li>
-					<li><?php _e( 'More Web Fonts', 'modern-real-estate' ); ?></li>
-					<li><?php _e( 'Adjust Featured Image Sizes', 'modern-real-estate' ); ?></li>
-					<li><?php _e( 'Easily Add Custom Scripts/Styles', 'modern-real-estate' ); ?></li>
-					<li><?php _e( 'and More!', 'modern-real-estate' ); ?></li>
+					<li><?php _e( 'Priority Ticketing Support', 'modern-estate' ); ?></li>
+					<li><?php _e( 'More Color Schemes', 'modern-estate' ); ?></li>
+					<li><?php _e( 'More Web Fonts', 'modern-estate' ); ?></li>
+					<li><?php _e( 'Adjust Featured Image Sizes', 'modern-estate' ); ?></li>
+					<li><?php _e( 'Easily Add Custom Scripts/Styles', 'modern-estate' ); ?></li>
+					<li><?php _e( 'and More!', 'modern-estate' ); ?></li>
 				</ul>
 
-				<span class="sds-theme-options-btn-green"><?php _e( 'Upgrade Now!', 'modern-real-estate' ); ?></span>
+				<span class="sds-theme-options-btn-green"><?php _e( 'Upgrade Now!', 'modern-estate' ); ?></span>
 			</a>
 		</div>
 	<?php
@@ -118,17 +118,17 @@ if ( ! function_exists( 'sds_theme_options_upgrade_cta' ) ) {
 		switch( $type ) :
 			case 'color-schemes':
 			?>
-				<p><?php printf( __( '%1$s and receive more color schemes!', 'modern-real-estate' ), '<a href="http://slocumstudio.com/wordpress-themes/modern-real-estate?utm_medium=options-panel-plug&amp;utm_campaign=WordPressThemes" target="_blank">Upgrade to Modern Real Estate Pro</a>' ); ?></p>
+				<p><?php printf( __( '%1$s and receive more color schemes!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
 			<?php
 			break;
 			case 'web-fonts':
 			?>
-				<p><?php printf( __( '%1$s to use more web fonts!', 'modern-real-estate' ), '<a href="http://slocumstudio.com/wordpress-themes/modern-real-estate?utm_medium=options-panel-plug&amp;utm_campaign=WordPressThemes" target="_blank">Upgrade to Modern Real Estate Pro</a>' ); ?></p>
+				<p><?php printf( __( '%1$s to use more web fonts!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
 			<?php
 			break;
 			case 'help-support':
 			?>
-				<p><?php printf( __( '%1$s to receive priority ticketing support!', 'modern-real-estate' ), '<a href="http://slocumstudio.com/wordpress-themes/modern-real-estate?utm_medium=options-panel-plug&amp;utm_campaign=WordPressThemes" target="_blank">Upgrade to Modern Real Estate Pro</a>' ); ?></p>
+				<p><?php printf( __( '%1$s to receive priority ticketing support!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
 			<?php
 			break;
 		endswitch;
@@ -140,7 +140,7 @@ if ( ! function_exists( 'sds_theme_options_help_support_tab_content' ) ) {
 
 	function sds_theme_options_help_support_tab_content( ) {
 	?>
-		<p><?php printf( __( 'If you\'d like to create a suppport request, please visit the %1$s.', 'modern-real-estate' ), '<a href="http://wordpress.org/themes/modern-real-estate" target="_blank">Modern Real Estate Forums on WordPress.org</a>' ); ?></p>
+		<p><?php printf( __( 'If you\'d like to create a suppport request, please visit the %1$s.', 'modern-estate' ), '<a href="http://wordpress.org/themes/modern-estate" target="_blank">Modern Estate Forums on WordPress.org</a>' ); ?></p>
 	<?php
 	}
 }
@@ -149,6 +149,6 @@ if ( ! function_exists( 'sds_copyright_branding' ) ) {
 	add_filter( 'sds_copyright_branding', 'sds_copyright_branding', 10, 2 );
 
 	function sds_copyright_branding( $text, $theme_name ) {
-		return '<a href="http://slocumstudio.com/wordpress-themes/modern-real-estate-free/?utm_medium=footer-plugs&amp;utm_campaign=WordPressThemes" target="_blank">' . sprintf( __( '%1$s by Slocum Design Studio', 'modern-real-estate' ), $theme_name ) . '</a>';
+		return '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-free/" target="_blank">' . sprintf( __( '%1$s by Slocum Studio', 'modern-estate' ), $theme_name ) . '</a>';
 	}
 }

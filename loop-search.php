@@ -2,7 +2,7 @@
 	if ( have_posts() ) : // Search results
 ?>
 	<header class="archive-block-header home-block-header search-title">
-		<h1 title="<?php esc_attr_e( sprintf( __( 'Search results for \'%s\'', 'modern-real-estate' ), get_search_query() ) ); ?>" class="page-title"><?php printf( __( 'Search results for "%s"', 'modern-real-estate' ), get_search_query() ); ?></h1>
+		<h1 title="<?php esc_attr_e( sprintf( __( 'Search results for \'%s\'', 'modern-estate' ), get_search_query() ) ); ?>" class="page-title"><?php printf( __( 'Search results for "%s"', 'modern-estate' ), get_search_query() ); ?></h1>
 	</header>
 
 	<?php while ( have_posts() ) : the_post(); ?>
@@ -42,14 +42,14 @@
 	<?php endwhile; ?>
 <?php else : // No search results ?>
 	<header class="archive-block-header home-block-header search-title">
-		<h1 title="<?php esc_attr_e( sprintf( __( 'Search results for \'%s\'', 'modern-real-estate' ), get_search_query() ) ); ?>" class="page-title"><?php printf( __( 'Search results for "%s"', 'modern-real-estate' ), get_search_query() ); ?></h1>
+		<h1 title="<?php esc_attr_e( sprintf( __( 'Search results for \'%s\'', 'modern-estate' ), get_search_query() ) ); ?>" class="page-title"><?php printf( __( 'Search results for "%s"', 'modern-estate' ), get_search_query() ); ?></h1>
 	</header>
 
 	<section class="no-results no-posts no-search-results latest-post">
 		<?php sds_no_posts(); ?>
 
 		<section id="search-again" class="search-again search-block no-posts no-search-results">
-			<p><?php _e( 'Would you like to search again?', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'Would you like to search again?', 'modern-estate' ); ?></p>
 			<?php echo get_search_form(); ?>
 		</section>
 	</section>

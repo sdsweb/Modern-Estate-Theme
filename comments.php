@@ -18,7 +18,7 @@ if ( post_password_required() )
 			<section class="comments-title-container cf">
 				<h4 class="comments-title block-title">
 					<?php
-						printf( _n( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'modern-real-estate' ),
+						printf( _n( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'modern-estate' ),
 						number_format_i18n( get_comments_number() ),
 						'<span>' . get_the_title() . '</span>' );
 					?>
@@ -31,9 +31,9 @@ if ( post_password_required() )
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 				<nav class="navigation comment-navigation" role="navigation">
-					<h1 class="assistive-text section-heading"><?php _e( 'Comment navigation', 'modern-real-estate' ); ?></h1>
-					<section class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'modern-real-estate' ) ); ?></section>
-					<section class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'modern-real-estate' ) ); ?></section>
+					<h1 class="assistive-text section-heading"><?php _e( 'Comment navigation', 'modern-estate' ); ?></h1>
+					<section class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'modern-estate' ) ); ?></section>
+					<section class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'modern-estate' ) ); ?></section>
 				</nav>
 			<?php endif; // Check for comment navigation ?>
 

@@ -67,7 +67,7 @@
 			<section class="entry-description">
 				<?php the_content(); ?>
 
-				<?php edit_post_link( __( 'Edit Post', 'modern-real-estate' ) ); // Allow logged in users to edit ?>
+				<?php edit_post_link( __( 'Edit Post', 'modern-estate' ) ); // Allow logged in users to edit ?>
 
 				<section class="clear"></section>
 
@@ -90,7 +90,7 @@
 				<section class="author-info">
 					<p>Posted by <span class="author-name"><?php echo get_the_author_meta( 'display_name' ); ?></span></p>
 					<p><?php echo get_the_author_meta( 'description' ); ?></p>
-					<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php _e( 'View more posts from this author', 'modern-real-estate' ); ?></a>
+					<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php _e( 'View more posts from this author', 'modern-estate' ); ?></a>
 				</section>
 
 				<section class="clear"></section>

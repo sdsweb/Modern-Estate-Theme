@@ -24,13 +24,13 @@
 			<?php tha_header_top(); ?>
 			<div class="in">
 				<!-- Social Media Navigation -->
-				<nav class="social-media">
+				<nav class="social-media <?php echo ( has_nav_menu( 'top_nav' ) ) ? 'has-top-nav' : false; ?>">
 					<?php sds_social_media(); ?>			
 				</nav>
 
 				<!-- Top Navigation	-->
 				<?php if( has_nav_menu( 'top_nav' ) ) : // Top Navigation Area ?>
-					<button class="nav-button"><?php _e( 'Toggle Navigation', 'modern-real-estate' ); ?></button>
+					<button class="nav-button"><?php _e( 'Toggle Navigation', 'modern-estate' ); ?></button>
 					<nav class="top-nav">
 						<?php
 							wp_nav_menu( array(
@@ -54,15 +54,17 @@
 					</section>
 
 					<!-- Header CTA Block -->
-					<section class="header-cta-container">
-						<?php sds_header_call_to_action_sidebar(); // Header CTA Sidebar ?>
-					</section>
+					<?php if ( is_active_sidebar( 'header-call-to-action-sidebar' ) ) : ?>
+						<section class="header-cta-container">
+							<?php sds_header_call_to_action_sidebar(); // Header CTA Sidebar ?>
+						</section>
+					<?php endif; ?>
 				</div>
 			</section>
 				<!-- Primary Navigation -->
 				<nav class="header-bottom">
 					<div class="in">
-						<button class="primary-nav-button"><?php _e( 'Navigation', 'modern-real-estate' ); ?></button>
+						<button class="primary-nav-button"><?php _e( 'Navigation', 'modern-estate' ); ?></button>
 						<?php
 							// Primary Navigation Area
 							wp_nav_menu( array(

@@ -11,7 +11,7 @@
 
 		<?php if ( has_post_thumbnail() ) : // Featured Image ?>
 			<header class="blog-post-header">
-				<?php sds_featured_image( false, 'mre-685x300' ); ?>
+				<?php sds_featured_image( false, 'me-685x300' ); ?>
 			</header>
 		<?php endif; ?>
 
@@ -24,7 +24,7 @@
 
 			<section class="clear"></section>
 
-			<?php edit_post_link( __( 'Edit Page', 'modern-real-estate' ) ); // Allow logged in users to edit ?>
+			<?php edit_post_link( __( 'Edit Page', 'modern-estate' ) ); // Allow logged in users to edit ?>
 
 			<?php if ( $multipage ) : ?>
 				<section class="single-post-navigation single-post-pagination wp-link-pages">

@@ -37,7 +37,7 @@ get_header(); ?>
 		endif;
 
 		// Front page and front page sidebar are not active
-		if ( ! ( get_option( 'show_on_front' ) === 'page' && get_option( 'page_on_front' ) ) && ! is_active_sidebar( 'front-page-sidebar' ) )
+		if ( ( get_option( 'show_on_front' ) !== 'page' || ! get_option( 'page_on_front' ) ) || ! is_active_sidebar( 'front-page-sidebar' ) )
 			get_sidebar(); 
 	?>
 	</section>

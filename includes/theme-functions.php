@@ -1,7 +1,7 @@
 <?php
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
@@ -126,11 +126,7 @@ if ( ! function_exists( 'sds_wp_title' ) ) {
 if ( ! function_exists( 'sds_primary_menu_fallback' ) ) {
 	function sds_primary_menu_fallback() {
 		wp_page_menu( array(
-			'depth'       => 1,
-			'sort_column' => 'menu_order, post_title',
 			'menu_class'  => 'primary-nav menu',
-			'include'     => '',
-			'exclude'     => '',
 			'echo'        => true,
 			'show_home'   => true,
 			'link_before' => '',
@@ -146,62 +142,62 @@ if ( ! function_exists( 'sds_primary_menu_fallback' ) ) {
 if ( ! function_exists( 'sds_sitemap' ) ) {
 	function sds_sitemap() {
 	?>
-	<section class="sds-sitemap sitemap">
-		<section class="sitemap-pages page-list">
-			<h2 title="<?php esc_attr_e( 'Pages', 'modern-real-estate' ); ?>"><?php _e( 'Pages', 'modern-real-estate' ); ?></h2>
-			<ul>
-				<?php wp_list_pages( array( 'title_li' => '' ) ); ?>
-			</ul>
-		</section>
+		<section class="sds-sitemap sitemap">
+			<section class="sitemap-pages page-list">
+				<h2 title="<?php esc_attr_e( 'Pages', 'modern-estate' ); ?>"><?php _e( 'Pages', 'modern-estate' ); ?></h2>
+				<ul>
+					<?php wp_list_pages( array( 'title_li' => '' ) ); ?>
+				</ul>
+			</section>
 
-		<section class="sitemap-archives sitemap-monthly-archives monthly-archives archive-list">
-			<h2 title="<?php esc_attr_e( 'Monthly Archives', 'modern-real-estate' ); ?>"><?php _e( 'Monthly Archives', 'modern-real-estate' ); ?></h2>
-			<ul>
-				<?php wp_get_archives(); ?>
-			</ul>
-		</section>
+			<section class="sitemap-archives sitemap-monthly-archives monthly-archives archive-list">
+				<h2 title="<?php esc_attr_e( 'Monthly Archives', 'modern-estate' ); ?>"><?php _e( 'Monthly Archives', 'modern-estate' ); ?></h2>
+				<ul>
+					<?php wp_get_archives(); ?>
+				</ul>
+			</section>
 
-		<section class="sitemap-categories category-list">
-			<h2 title="<?php esc_attr_e( 'Blog Categories', 'modern-real-estate' ); ?>"><?php _e( 'Blog Categories', 'modern-real-estate' ); ?></h2>
-			<ul>
-				<?php wp_list_categories( array( 'title_li' => '' ) ); ?>
-			</ul>
-		</section>
+			<section class="sitemap-categories category-list">
+				<h2 title="<?php esc_attr_e( 'Blog Categories', 'modern-estate' ); ?>"><?php _e( 'Blog Categories', 'modern-estate' ); ?></h2>
+				<ul>
+					<?php wp_list_categories( array( 'title_li' => '' ) ); ?>
+				</ul>
+			</section>
 
 
-		<?php
-			// Output all public post types except attachments and pages (see above for pages)
-			foreach( get_post_types( array( 'public' => true ) ) as $post_type ) {
-				if ( ! in_array( $post_type, array( 'attachment', 'page' ) ) ) {
-				$post_type_object = get_post_type_object( $post_type );
+			<?php
+				// Output all public post types except attachments and pages (see above for pages)
+				foreach( get_post_types( array( 'public' => true ) ) as $post_type ) {
+					if ( ! in_array( $post_type, array( 'attachment', 'page' ) ) ) {
+					$post_type_object = get_post_type_object( $post_type );
 
-				$query = new WP_Query( array(
-					'post_type' => $post_type,
-					'posts_per_page' => wp_count_posts( $post_type )->publish
-				) );
+					$query = new WP_Query( array(
+						'post_type' => $post_type,
+						'posts_per_page' => wp_count_posts( $post_type )->publish
+					) );
 
-				if( $query->have_posts() ) :
-				?>
-					<section class="sitemap-post-type-list sitemap-<?php echo $post_type_object->name; ?>-list post-type-list">
-						<h2 title="<?php echo esc_attr( $post_type_object->labels->name ); ?>">
-							<?php echo $post_type_object->labels->name; ?>
-						</h2>
+					if( $query->have_posts() ) :
+					?>
+						<section class="sitemap-post-type-list sitemap-<?php echo $post_type_object->name; ?>-list post-type-list">
+							<h2 title="<?php echo esc_attr( $post_type_object->labels->name ); ?>">
+								<?php echo $post_type_object->labels->name; ?>
+							</h2>
 
-						<ul>
-							<?php while( $query->have_posts() ) : $query->the_post(); ?>
-								<li>
-									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-								</li>
-							<?php endwhile; ?>
-						</ul>
-					</section>
-				<?php
-				endif;
+							<ul>
+								<?php while( $query->have_posts() ) : $query->the_post(); ?>
+									<li>
+										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									</li>
+								<?php endwhile; ?>
+							</ul>
+						</section>
+					<?php
+					endif;
+				}
 			}
-		}
-		?>
+			?>
 		</section>
-		<?php
+	<?php
 	}
 }
 
@@ -214,46 +210,46 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		if ( is_author() ) :
 			$author = get_user_by( 'slug', get_query_var( 'author_name' ) ); // Get user data by slug with value of author_name in query
 		?>
-			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-real-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title">
-				<?php _e( 'Author Archive:', 'modern-real-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>
+			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title">
+				<?php _e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>
 			</h1>
 		<?php
 		// Categories
 		elseif ( is_category() ) :
 		?>
-			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-real-estate' ) ); ?>" class="page-title">
-				<?php single_cat_title( __( 'Category Archive: ', 'modern-real-estate' ) ); ?>
+			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+				<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php 
 		// Tags
 		elseif ( is_tag() ) :
 		?>
-			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-real-estate' ) ); ?>" class="page-title">
-				<?php single_tag_title( __( 'Tag Archive: ', 'modern-real-estate' ) ); ?>
+			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+				<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php
 		// Daily Archives
 		elseif ( is_day() ) :
 			$the_date = get_the_date();
 		?>
-			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
-				<?php _e( 'Daily Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>
+			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+				<?php _e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
 		// Monthly Archives
 		elseif ( is_month() ) :
 			$the_date = get_the_date( 'F Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
-				<?php _e( 'Monthly Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>
+			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+				<?php _e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
 		// Yearly Archives
 		elseif ( is_year() ) :
 			$the_date = get_the_date( 'Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
-				<?php _e( 'Yearly Archives:', 'modern-real-estate' ); ?> <?php echo $the_date; ?>
+			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+				<?php _e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
 		endif;
@@ -267,7 +263,7 @@ if ( ! function_exists( 'sds_no_posts' ) ) {
 	function sds_no_posts() {
 	?>
 		<section class="no-results no-posts">
-			<p><?php _e( 'We were not able to find any posts. Please try again.', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'We were not able to find any posts. Please try again.', 'modern-estate' ); ?></p>
 		</section>
 	<?php
 	}
@@ -319,7 +315,7 @@ if ( ! function_exists( 'sds_copyright' ) ) {
 			<?php echo apply_filters( 'sds_copyright', 'Copyright &copy; ' . date( 'Y' ) . ' <a href="' . esc_url( home_url() ) . '">' . get_bloginfo( 'name' ) . '</a>. All Rights Reserved.' ); ?>
 		</span>
 		<span class="slocum-credit">
-			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumstudio.com/?utm_medium=footer-plugs&amp;utm_campaign=WordPressThemes" target="_blank">' . $theme_name . ' by Slocum Design Studio</a>', $theme_name ); ?>
+			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumthemes.com/" target="_blank">' . $theme_name . ' by Slocum Design Studio</a>', $theme_name ); ?>
 		</span>
 	<?php
 	}
@@ -333,19 +329,20 @@ if ( ! function_exists( 'sds_social_media' ) ) {
 		global $sds_theme_options;
 
 		if ( ! empty( $sds_theme_options['social_media'] ) ) {
-			// Map the correct values for social icon display (FontAwesome webfont, i.e. 'icon-rss' = RSS icon)
+			// Map the correct values for social icon display (FontAwesome webfont, i.e. 'fa-rss' = RSS icon)
 			$social_font_map = array(
-				'facebook_url' => 'icon-facebook',
-				'twitter_url' => 'icon-twitter',
-				'linkedin_url' => 'icon-linkedin',
-				'google_plus_url' => 'icon-google-plus',
-				'youtube_url' => 'icon-youtube',
-				'vimeo_url' => 'icon-play',
-				'instagram_url' => 'icon-instagram',
-				'pinterest_url' => 'icon-pinterest',
+				'facebook_url' => 'fa fa-facebook',
+				'twitter_url' => 'fa fa-twitter',
+				'linkedin_url' => 'fa fa-linkedin',
+				'google_plus_url' => 'fa fa-google-plus',
+				'youtube_url' => 'fa fa-youtube',
+				'vimeo_url' => 'fa fa-vimeo-square', // previously fa-play
+				'pinterest_url' => 'fa fa-pinterest',
+				'instagram_url' => 'fa fa-instagram',
+				'flickr_url' => 'fa fa-flickr',
 				//'yelp_url' => '',
-				'foursquare_url' => 'icon-foursquare',
-				'rss_url' => 'icon-rss'
+				'foursquare_url' => 'fa fa-foursquare',
+				'rss_url' => 'fa fa-rss'
 			);
 
 			$social_font_map = apply_filters( 'sds_social_icon_map', $social_font_map );
@@ -390,7 +387,7 @@ if ( ! function_exists( 'sds_post_meta' ) ) {
 		?>
 			<p>
 			<?php
-				printf( __( 'This entry was posted in %1$s and tagged in %2$s.', 'modern-real-estate' ),
+				printf( __( 'This entry was posted in %1$s and tagged in %2$s.', 'modern-estate' ),
 				get_the_category_list( ', ', 'single' ),
 				get_the_tag_list( '', ', ' ) );
 			?>
@@ -401,7 +398,7 @@ if ( ! function_exists( 'sds_post_meta' ) ) {
 		?>
 			<p>
 			<?php
-				printf( __( 'This entry was posted in %1$s.', 'modern-real-estate' ),
+				printf( __( 'This entry was posted in %1$s.', 'modern-estate' ),
 				get_the_category_list( ', ', 'single' ) );
 			?>
 			</p>
@@ -411,7 +408,7 @@ if ( ! function_exists( 'sds_post_meta' ) ) {
 		?>
 			<p>
 			<?php
-				printf( __( 'This entry was tagged in %1$s.', 'modern-real-estate' ),
+				printf( __( 'This entry was tagged in %1$s.', 'modern-estate' ),
 				get_the_tag_list( '', ', ' ) );
 			?>
 			</p>
@@ -431,7 +428,7 @@ if ( ! function_exists( 'sds_post_navigation' ) ) {
 
 		$pagination_links = paginate_links( array(
 			'base' => esc_url( get_pagenum_link() ) . '%_%', // %_% will be replaced with format below
-			'format' => ( get_option( 'permalink_structure' ) && ! $wp_query->is_search ) ? '?paged=%#%' : '&paged=%#%', // %#% will be replaced with page number
+			'format' => ( ( get_option( 'permalink_structure' ) && ! $wp_query->is_search ) || ( is_home() && get_option( 'show_on_front' ) !== 'page' && ! get_option( 'page_on_front' ) ) ) ? '?paged=%#%' : '&paged=%#%', // %#% will be replaced with page number
 			'current' => max( 1, get_query_var( 'paged' ) ), // Get whichever is the max out of 1 and the current page count
 			'total' => $wp_query->max_num_pages, // Get total number of pages in current query
 			'next_text' => 'Next &#8594;',
@@ -464,7 +461,7 @@ if ( ! function_exists( 'sds_comment' ) ) {
 			// Display trackbacks differently than normal comments.
 		?>
 		<li id="comment-<?php comment_ID(); ?>" <?php comment_class(); ?>>
-			<p><?php _e( 'Pingback:', 'modern-real-estate' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( 'Edit', '<span class="ping-meta"><span class="edit-link">', '</span></span>' ); ?></p>
+			<p><?php _e( 'Pingback:', 'modern-estate' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( 'Edit', '<span class="ping-meta"><span class="edit-link">', '</span></span>' ); ?></p>
 		</li>
 		<?php
 			break;
@@ -481,14 +478,14 @@ if ( ! function_exists( 'sds_comment' ) ) {
 						<header class="comment-meta">
 							<cite class="fn">
 								<?php
-									printf( __( '<a href="%1$s"><time datetime="%2$s" itemprop="commentTime">%3$s</time></a>', 'modern-real-estate' ),
+									printf( __( '<a href="%1$s"><time datetime="%2$s" itemprop="commentTime">%3$s</time></a>', 'modern-estate' ),
 										esc_url( get_comment_link( $comment->comment_ID ) ),
 										get_comment_time( 'c' ),
-										sprintf( __( '%1$s at %2$s', 'modern-real-estate' ), get_comment_date(), get_comment_time() )
+										sprintf( __( '%1$s at %2$s', 'modern-estate' ), get_comment_date(), get_comment_time() )
 									);
 								?>
 
-								<?php edit_comment_link( __( 'Edit', 'modern-real-estate' ), '<span class="edit-link">', '<span>' ); ?>
+								<?php edit_comment_link( __( 'Edit', 'modern-estate' ), '<span class="edit-link">', '<span>' ); ?>
 							</cite>
 						</header>
 					</section>
@@ -496,7 +493,7 @@ if ( ! function_exists( 'sds_comment' ) ) {
 
 				<section class="comment-content-container">
 					<?php if ( $comment->comment_approved == '0' ) : ?>
-						<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'modern-real-estate' ); ?></p>
+						<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'modern-estate' ); ?></p>
 					<?php endif; ?>
 
 					<section class="comment-content">
@@ -507,7 +504,7 @@ if ( ! function_exists( 'sds_comment' ) ) {
 				<section class="clear">&nbsp;</section>
 
 				<section class="reply">
-					<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'modern-real-estate' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+					<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'modern-estate' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
 				</section>
 			</article>
 		</li>
@@ -616,9 +613,9 @@ function sds_after_setup_theme() {
 
 	// Register WordPress Menus
 	register_nav_menus( array(
-		'top_nav' => __( 'Top Navigation', 'modern-real-estate' ),
-		'primary_nav' => __( 'Primary Navigation', 'modern-real-estate' ),
-		'footer_nav' => __( 'Footer Navigation', 'modern-real-estate' )
+		'top_nav' => __( 'Top Navigation', 'modern-estate' ),
+		'primary_nav' => __( 'Primary Navigation', 'modern-estate' ),
+		'footer_nav' => __( 'Footer Navigation', 'modern-estate' )
 	) );
 }
 
@@ -633,9 +630,9 @@ function sds_widgets_init() {
 
 	// Primary sidebar
 	register_sidebar( array(
-		'name'          => __( 'Primary Sidebar', 'modern-real-estate' ),
+		'name'          => __( 'Primary Sidebar', 'modern-estate' ),
 		'id'            => 'primary-sidebar',
-		'description'   => __( 'This widget area is the primary widget area.', 'modern-real-estate' ),
+		'description'   => __( 'This widget area is the primary widget area.', 'modern-estate' ),
 		'before_widget' => '<section id="primary-sidebar-%1$s" class="widget primary-sidebar primary-sidebar-widget %2$s">',
 		'after_widget'  => '<section class="clear"></section></section>',
 		'before_title'  => '<h3 class="widgettitle widget-title primary-sidebar-widget-title">',
@@ -644,9 +641,9 @@ function sds_widgets_init() {
 
 	// Front Page Slider
 	register_sidebar( array(
-		'name'          => __( 'Front Page Slider', 'modern-real-estate' ),
+		'name'          => __( 'Front Page Slider', 'modern-estate' ),
 		'id'            => 'front-page-slider-sidebar',
-		'description'   => __( '*This widget area is only displayed if a Front Page is selected via Settings > Reading in the Dashboard. Specifically formatted for Soliloquy or SlideDeck sliders.* This widget area is displayed above the content on the Front Page.', 'modern-real-estate' ),
+		'description'   => __( '*This widget area is only displayed if a Front Page is selected via Settings > Reading in the Dashboard. Specifically formatted for Soliloquy or SlideDeck sliders.* This widget area is displayed above the content on the Front Page.', 'modern-estate' ),
 		'before_widget' => '<section id="front-page-slider-%1$s" class="widget front-page-slider front-page-slider-widget slider %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title front-page-slider-title">',
@@ -655,9 +652,9 @@ function sds_widgets_init() {
 
 	// Front Page
 	register_sidebar( array(
-		'name'          => __( 'Front Page', 'modern-real-estate' ),
+		'name'          => __( 'Front Page', 'modern-estate' ),
 		'id'            => 'front-page-sidebar',
-		'description'   => __( '*This widget area is only displayed if a Front Page is selected via Settings > Reading in the Dashboard.* This widget area is displayed below the Front Page Slider on the Front Page and will replace the Front Page content.', 'modern-real-estate' ),
+		'description'   => __( '*This widget area is only displayed if a Front Page is selected via Settings > Reading in the Dashboard.* This widget area is displayed below the Front Page Slider on the Front Page and will replace the Front Page content.', 'modern-estate' ),
 		'before_widget' => '<section id="front-page-%1$s" class="widget front-page front-page-sidebar %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title front-page-title">',
@@ -666,9 +663,9 @@ function sds_widgets_init() {
 
 	// Header Call To Action
 	register_sidebar( array(
-		'name'          => __( 'Header Call To Action', 'modern-real-estate' ),
+		'name'          => __( 'Header Call To Action', 'modern-estate' ),
 		'id'            => 'header-call-to-action-sidebar',
-		'description'   => __( 'This widget area is used to display a call to action in the header', 'modern-real-estate' ),
+		'description'   => __( 'This widget area is used to display a call to action in the header', 'modern-estate' ),
 		'before_widget' => '<section id="header-call-to-action-%1$s" class="widget header-call-to-action-widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title header-call-to-action-widget-title">',
@@ -677,9 +674,9 @@ function sds_widgets_init() {
 
 	// After Posts
 	register_sidebar( array(
-		'name'          => __( 'After Posts', 'modern-real-estate' ),
+		'name'          => __( 'After Posts', 'modern-estate' ),
 		'id'            => 'after-posts-sidebar',
-		'description'   => __( 'This widget area is displayed below the content on single posts only.', 'modern-real-estate' ),
+		'description'   => __( 'This widget area is displayed below the content on single posts only.', 'modern-estate' ),
 		'before_widget' => '<section id="after-posts-%1$s" class="widget after-posts after-posts-widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title after-posts-title">',
@@ -688,9 +685,9 @@ function sds_widgets_init() {
 
 	// Footer
 	register_sidebar( array(
-		'name'          => __( 'Footer', 'modern-real-estate' ),
+		'name'          => __( 'Footer', 'modern-estate' ),
 		'id'            => 'footer-sidebar',
-		'description'   => __( 'This widget area is displayed in the footer of all pages.', 'modern-real-estate' ),
+		'description'   => __( 'This widget area is displayed in the footer of all pages.', 'modern-estate' ),
 		'before_widget' => '<section id="footer-widget-%1$s" class="widget footer-widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title footer-widget-title">',
@@ -699,9 +696,9 @@ function sds_widgets_init() {
 
 	// Copyright
 	register_sidebar( array(
-		'name'          => __( 'Copyright Area', 'modern-real-estate' ),
+		'name'          => __( 'Copyright Area', 'modern-estate' ),
 		'id'            => 'copyright-area-sidebar',
-		'description'   => __( 'This widget area is designed for small text blurbs or disclaimers at the bottom of the website.', 'modern-real-estate' ),
+		'description'   => __( 'This widget area is designed for small text blurbs or disclaimers at the bottom of the website.', 'modern-estate' ),
 		'before_widget' => '<section id="copyright-area-widget-%1$s" class="widget copyright-area copyright-area-widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h3 class="widgettitle widget-title copyright-area-widget-title">',

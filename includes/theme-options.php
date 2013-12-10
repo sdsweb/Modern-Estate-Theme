@@ -1,7 +1,7 @@
 <?php
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
@@ -42,8 +42,9 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) ); // Enqueue Theme Options Stylesheet
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) ); // Register Appearance Menu Item
+			add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ),999 ); // Add Theme Options Menu to Toolbar
 			add_action( 'admin_init', array( $this, 'admin_init' ) ); // Register Settings, Settings Sections, and Settings Fields
-			add_filter( 'wp_redirect', array( $this, 'wp_redirect' ) ); // Add "hash" (tab) to url before re-direct
+			add_filter( 'wp_redirect', array( $this, 'wp_redirect' ) ); // Add "hash" (tab) to URL before re-direct
 		}
 
 
@@ -73,7 +74,24 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		 * This function adds a menu item under "Appearance" in the Dashboard.
 		 */
 		function admin_menu() {
-			add_theme_page( __( 'Theme Options', 'modern-real-estate' ), __( 'Theme Options', 'modern-real-estate' ), 'edit_theme_options', 'sds-theme-options', array( $this, 'sds_theme_options_page' ) );
+			add_theme_page( __( 'Theme Options', 'modern-estate' ), __( 'Theme Options', 'modern-estate' ), 'edit_theme_options', 'sds-theme-options', array( $this, 'sds_theme_options_page' ) );
+		}
+
+		/**
+		 * This function adds a new menu to the Toolbar under the appearance parent group on the front-end.
+		 */
+		function admin_bar_menu( $wp_admin_bar ) {
+			// Make sure we're on the front end and that the current user can either switch_themes or edit_theme_options
+			if ( ! is_admin() && ( current_user_can( 'switch_themes' ) || current_user_can( 'edit_theme_options' ) ) ) 
+				$wp_admin_bar->add_menu( array(
+					'parent' => 'appearance',
+					'id'  => 'sds-theme-options',
+					'title' => __( 'Theme Options', 'modern-estate' ),
+					'href' => admin_url( 'themes.php?page=sds-theme-options' ),
+					'meta' => array(
+						'class' => 'sds-theme-options'
+					)
+				) );
 		}
 
 		/**
@@ -89,23 +107,23 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 			 */
 
 			// Logo
-			add_settings_section( 'sds_theme_options_logo_section', __( 'Upload A Logo', 'modern-real-estate'), array( $this, 'sds_theme_options_logo_section' ), 'sds-theme-options[general]' );
-			add_settings_field( 'sds_theme_options_logo_field', __( 'Logo:', 'modern-real-estate'), array( $this, 'sds_theme_options_logo_field' ), 'sds-theme-options[general]', 'sds_theme_options_logo_section' );
+			add_settings_section( 'sds_theme_options_logo_section', __( 'Upload A Logo', 'modern-estate'), array( $this, 'sds_theme_options_logo_section' ), 'sds-theme-options[general]' );
+			add_settings_field( 'sds_theme_options_logo_field', __( 'Logo:', 'modern-estate'), array( $this, 'sds_theme_options_logo_field' ), 'sds-theme-options[general]', 'sds_theme_options_logo_section' );
 			
 			// Hide Tagline
-			add_settings_section( 'sds_theme_options_hide_tagline_section', __( 'Show/Hide Site Tagline', 'modern-real-estate'), array( $this, 'sds_theme_options_hide_tagline_section' ), 'sds-theme-options[general]' );
-			add_settings_field( 'sds_theme_options_hide_tagline_field', __( 'Show or Hide Site Tagline:', 'modern-real-estate'), array( $this, 'sds_theme_options_hide_tagline_field' ), 'sds-theme-options[general]', 'sds_theme_options_hide_tagline_section' );
+			add_settings_section( 'sds_theme_options_hide_tagline_section', __( 'Show/Hide Site Tagline', 'modern-estate'), array( $this, 'sds_theme_options_hide_tagline_section' ), 'sds-theme-options[general]' );
+			add_settings_field( 'sds_theme_options_hide_tagline_field', __( 'Show or Hide Site Tagline:', 'modern-estate'), array( $this, 'sds_theme_options_hide_tagline_field' ), 'sds-theme-options[general]', 'sds_theme_options_hide_tagline_section' );
 
 			// Color Schemes (if specified by theme)
 			if ( function_exists( 'sds_color_schemes' ) ) {
-				add_settings_section( 'sds_theme_options_color_schemes_section', __( 'Color Scheme', 'modern-real-estate'), array( $this, 'sds_theme_options_color_schemes_section' ), 'sds-theme-options[general]' );
-				add_settings_field( 'sds_theme_options_color_schemes_field', __( 'Select A Color Scheme:', 'modern-real-estate'), array( $this, 'sds_theme_options_color_schemes_field' ), 'sds-theme-options[general]', 'sds_theme_options_color_schemes_section' );
+				add_settings_section( 'sds_theme_options_color_schemes_section', __( 'Color Scheme', 'modern-estate'), array( $this, 'sds_theme_options_color_schemes_section' ), 'sds-theme-options[general]' );
+				add_settings_field( 'sds_theme_options_color_schemes_field', __( 'Select A Color Scheme:', 'modern-estate'), array( $this, 'sds_theme_options_color_schemes_field' ), 'sds-theme-options[general]', 'sds_theme_options_color_schemes_section' );
 			}
 
 			// Google Web Fonts (if specified by theme)
 			if ( function_exists( 'sds_web_fonts' ) ) {
-				add_settings_section( 'sds_theme_options_web_fonts_section', __( 'Web Fonts', 'modern-real-estate'), array( $this, 'sds_theme_options_web_fonts_section' ), 'sds-theme-options[general]' );
-				add_settings_field( 'sds_theme_options_web_fonts_field', __( 'Select A Web Font:', 'modern-real-estate'), array( $this, 'sds_theme_options_web_fonts_field' ), 'sds-theme-options[general]', 'sds_theme_options_web_fonts_section' );
+				add_settings_section( 'sds_theme_options_web_fonts_section', __( 'Web Fonts', 'modern-estate'), array( $this, 'sds_theme_options_web_fonts_section' ), 'sds-theme-options[general]' );
+				add_settings_field( 'sds_theme_options_web_fonts_field', __( 'Select A Web Font:', 'modern-estate'), array( $this, 'sds_theme_options_web_fonts_field' ), 'sds-theme-options[general]', 'sds_theme_options_web_fonts_section' );
 			}
 
 
@@ -113,18 +131,19 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 			 * Social Media Settings (belong to the sds-theme-options[social-media] "page", used during page render to display section in tab format)
 			 */
 
- 			add_settings_section( 'sds_theme_options_social_media_section', __( 'Social Media', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_section' ), 'sds-theme-options[social-media]' );
-			add_settings_field( 'sds_theme_options_social_media_facebook_url_field', __( 'Facebook:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_facebook_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_twitter_url_field', __( 'Twitter:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_twitter_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_linkedin_url_field', __( 'LinkedIn:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_linkedin_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_google_plus_url_field', __( 'Google+:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_google_plus_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_youtube_url_field', __( 'YouTube:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_youtube_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_vimeo_url_field', __( 'Vimeo:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_vimeo_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_instagram_url_field', __( 'Instagram:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_instagram_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_pinterest_url_field', __( 'Pinterest:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_pinterest_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			//add_settings_field( 'sds_theme_options_social_media_yelp_url_field', __( 'Yelp:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_yelp_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_foursquare_url_field', __( 'Foursquare:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_foursquare_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
-			add_settings_field( 'sds_theme_options_social_media_rss_url_field', __( 'RSS:', 'modern-real-estate'), array( $this, 'sds_theme_options_social_media_rss_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+ 			add_settings_section( 'sds_theme_options_social_media_section', __( 'Social Media', 'modern-estate'), array( $this, 'sds_theme_options_social_media_section' ), 'sds-theme-options[social-media]' );
+			add_settings_field( 'sds_theme_options_social_media_facebook_url_field', __( 'Facebook:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_facebook_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_twitter_url_field', __( 'Twitter:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_twitter_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_linkedin_url_field', __( 'LinkedIn:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_linkedin_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_google_plus_url_field', __( 'Google+:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_google_plus_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_youtube_url_field', __( 'YouTube:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_youtube_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_vimeo_url_field', __( 'Vimeo:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_vimeo_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_instagram_url_field', __( 'Instagram:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_instagram_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_pinterest_url_field', __( 'Pinterest:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_pinterest_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_flickr_url_field', __( 'Flickr:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_flickr_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			//add_settings_field( 'sds_theme_options_social_media_yelp_url_field', __( 'Yelp:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_yelp_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_foursquare_url_field', __( 'Foursquare:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_foursquare_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
+			add_settings_field( 'sds_theme_options_social_media_rss_url_field', __( 'RSS:', 'modern-estate'), array( $this, 'sds_theme_options_social_media_rss_url_field' ), 'sds-theme-options[social-media]', 'sds_theme_options_social_media_section' );
 		}
 
 		/**
@@ -135,7 +154,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 			<p>
 				<?php
 					$sds_logo_dimensions = apply_filters( 'sds_theme_options_logo_dimensions', '300x100' );
-					printf( __( 'Upload a logo to to replace the site name. Recommended dimensions: %1$s.', 'modern-real-estate' ), $sds_logo_dimensions );
+					printf( __( 'Upload a logo to to replace the site name. Recommended dimensions: %1$s.', 'modern-estate' ), $sds_logo_dimensions );
 				?>
 			</p>
 		<?php
@@ -147,20 +166,20 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		function sds_theme_options_logo_field() {
 			global $sds_theme_options;
 		?>
-			<strong><?php _e( 'Current Logo:', 'modern-real-estate' ); ?></strong>
+			<strong><?php _e( 'Current Logo:', 'modern-estate' ); ?></strong>
 			<div class="sds-theme-options-preview sds-theme-options-logo-preview">
 				<?php
 					if ( isset( $sds_theme_options['logo_attachment_id'] ) && $sds_theme_options['logo_attachment_id'] ) :
 						echo wp_get_attachment_image( $sds_theme_options['logo_attachment_id'], 'full' );
 					else :
 				?>
-						<div class="description"><?php _e( 'No logo selected.', 'modern-real-estate' ); ?></div>
+						<div class="description"><?php _e( 'No logo selected.', 'modern-estate' ); ?></div>
 				<?php endif; ?>
 			</div>
 
 			<input type="hidden" id="sds_theme_options_logo" class="sds-theme-options-upload-value" name="sds_theme_options[logo_attachment_id]"  value="<?php echo ( isset( $sds_theme_options['logo_attachment_id'] ) && ! empty( $sds_theme_options['logo_attachment_id'] ) ) ? esc_attr( $sds_theme_options['logo_attachment_id'] ) : false; ?>" />
-			<input id="sds_theme_options_logo_attach" class="button-primary sds-theme-options-upload" name="sds_theme_options_logo_attach"  value="<?php esc_attr_e( 'Select or Upload Logo', 'modern-real-estate' ); ?>" data-media-title="Choose A Logo" data-media-button-text="Use As Logo" />
-			<?php submit_button( __( 'Remove Logo', 'modern-real-estate' ), array( 'secondary', 'button-remove-logo' ), 'sds_theme_options[remove-logo]', false, ( ! isset( $sds_theme_options['logo_attachment_id'] ) || empty( $sds_theme_options['logo_attachment_id'] ) ) ? array( 'disabled' => 'disabled', 'data-init-empty' => 'true' ) : false ); ?>
+			<input id="sds_theme_options_logo_attach" class="button-primary sds-theme-options-upload" name="sds_theme_options_logo_attach"  value="<?php esc_attr_e( 'Select or Upload Logo', 'modern-estate' ); ?>" data-media-title="Choose A Logo" data-media-button-text="Use As Logo" />
+			<?php submit_button( __( 'Remove Logo', 'modern-estate' ), array( 'secondary', 'button-remove-logo' ), 'sds_theme_options[remove-logo]', false, ( ! isset( $sds_theme_options['logo_attachment_id'] ) || empty( $sds_theme_options['logo_attachment_id'] ) ) ? array( 'disabled' => 'disabled', 'data-init-empty' => 'true' ) : false ); ?>
 		<?php
 		}
 
@@ -170,7 +189,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		 */
 		function sds_theme_options_hide_tagline_section() {
 		?>
-			<p><?php _e( 'Use this option to show or hide the site tagline.', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'Use this option to show or hide the site tagline.', 'modern-estate' ); ?></p>
 		<?php
 		}
 
@@ -180,11 +199,11 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		function sds_theme_options_hide_tagline_field() {
 			global $sds_theme_options;
 		?>
-			<div class="checkbox sds-theme-options-checkbox checkbox-show-hide-tagline" data-label-left="<?php esc_attr_e( 'Show', 'modern-real-estate' ); ?>" data-label-right="<?php esc_attr_e( 'Hide', 'modern-real-estate' ); ?>">
+			<div class="checkbox sds-theme-options-checkbox checkbox-show-hide-tagline" data-label-left="<?php esc_attr_e( 'Show', 'modern-estate' ); ?>" data-label-right="<?php esc_attr_e( 'Hide', 'modern-estate' ); ?>">
 				<input type="checkbox" id="sds_theme_options_hide_tagline" name="sds_theme_options[hide_tagline]" <?php ( isset( $sds_theme_options['hide_tagline'] ) ) ? checked( $sds_theme_options['hide_tagline'] ) : checked( false ); ?> />
 				<label for="sds_theme_options_hide_tagline">| | |</label>
 			</div>
-			<span class="description"><?php _e( 'When "show" is displayed, the tagline will be displayed on your site and vise-versa.', 'modern-real-estate' ); ?></span>
+			<span class="description"><?php _e( 'When "show" is displayed, the tagline will be displayed on your site and vise-versa.', 'modern-estate' ); ?></span>
 		<?php
 		}
 
@@ -194,7 +213,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		 */
 		function sds_theme_options_color_schemes_section() {
 		?>
-			<p><?php _e( 'Select a color scheme to use on your site.', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'Select a color scheme to use on your site.', 'modern-estate' ); ?></p>
 		<?php
 		}
 
@@ -239,7 +258,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		 */
 		function sds_theme_options_web_fonts_section() {
 		?>
-			<p><?php _e( 'Select a Google Web Font to use on your site.', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'Select a Google Web Font to use on your site.', 'modern-estate' ); ?></p>
 		<?php
 		}
 
@@ -259,7 +278,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 							<input type="radio" id="sds_theme_options_web_font_none" name="sds_theme_options[web_font]" <?php ( ! isset( $sds_theme_options['web_font'] ) || empty( $sds_theme_options['web_font'] ) || $sds_theme_options['web_font'] === 'none' ) ? checked( true ) : checked( false ); ?> value="none" />
 							<div class="sbt-theme-options-web-font-selected">&#10004;</div>
 						</label>
-						<span class="sds-theme-options-web-font-label-none"><?php _e( 'None', 'modern-real-estate' ); ?></span>
+						<span class="sds-theme-options-web-font-label-none"><?php _e( 'None', 'modern-estate' ); ?></span>
 				</div>
 
 				<?php
@@ -272,7 +291,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 								<div class="sbt-theme-options-web-font-selected">&#10004;</div>
 							</label>
 							<span class="sds-theme-options-web-font-label"><?php echo ( isset( $atts['label'] ) ) ? $atts['label'] : false; ?></span>
-							<span class="sds-theme-options-web-font-preview"><?php _e( 'Grumpy wizards make toxic brew for the evil Queen and Jack.', 'modern-real-estate' ); ?></span>
+							<span class="sds-theme-options-web-font-preview"><?php _e( 'Grumpy wizards make toxic brew for the evil Queen and Jack.', 'modern-estate' ); ?></span>
 						</div>
 				<?php
 					endforeach;
@@ -289,7 +308,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		 * This function is the callback for the social media settings section.
 		 */
 		function sds_theme_options_social_media_section() { ?>
-			<p><?php _e( 'Enter your social media links here. This section is used throughout the site to display social media links to visitors. Some themes display social media links automatically, and some only display them within the Social Media widget.', 'modern-real-estate' ); ?></p>
+			<p><?php _e( 'Enter your social media links here. This section is used throughout the site to display social media links to visitors. Some themes display social media links automatically, and some only display them within the Social Media widget.', 'modern-estate' ); ?></p>
 		<?php
 		}
 		
@@ -374,6 +393,16 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		}
 		
 		/**
+		 * This function is the callback for the flickr url settings field.
+		 */
+		function sds_theme_options_social_media_flickr_url_field() {
+			global $sds_theme_options;
+		?>
+			<input type="text" id="sds_theme_options_social_media_flickr_url" name="sds_theme_options[social_media][flickr_url]" class="large-text" value="<?php echo ( isset( $sds_theme_options['social_media']['flickr_url'] ) && ! empty( $sds_theme_options['social_media']['flickr_url'] ) ) ? esc_attr( esc_url( $sds_theme_options['social_media']['flickr_url'] ) ) : false; ?>" />
+		<?php
+		}
+		
+		/**
 		 * This function is the callback for the yelp url settings field.
 		 */
 		function sds_theme_options_social_media_yelp_url_field() {
@@ -399,15 +428,15 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 		function sds_theme_options_social_media_rss_url_field() {
 			global $sds_theme_options;
 		?>
-			<strong><?php _e( 'Use Site RSS Feed:', 'modern-real-estate' ); ?></strong>
-			<div class="checkbox sds-theme-options-checkbox checkbox-social_media-rss_url-use-site-feed" data-label-left="<?php esc_attr_e( 'Yes', 'modern-real-estate' ); ?>" data-label-right="<?php esc_attr_e( 'No', 'modern-real-estate' ); ?>">
+			<strong><?php _e( 'Use Site RSS Feed:', 'modern-estate' ); ?></strong>
+			<div class="checkbox sds-theme-options-checkbox checkbox-social_media-rss_url-use-site-feed" data-label-left="<?php esc_attr_e( 'Yes', 'modern-estate' ); ?>" data-label-right="<?php esc_attr_e( 'No', 'modern-estate' ); ?>">
 				<input type="checkbox" id="sds_theme_options_social_media_rss_url_use_site_feed" name="sds_theme_options[social_media][rss_url_use_site_feed]" <?php ( isset( $sds_theme_options['social_media']['rss_url_use_site_feed'] ) ) ? checked( $sds_theme_options['social_media']['rss_url_use_site_feed'] ) : checked( false ); ?> />
 				<label for="sds_theme_options_social_media_rss_url_use_site_feed">| | |</label>
 			</div>
-			<span class="description"><?php _e( 'When "yes" is displayed, the RSS feed for your site will be used.', 'modern-real-estate' ); ?></span>
+			<span class="description"><?php _e( 'When "yes" is displayed, the RSS feed for your site will be used.', 'modern-estate' ); ?></span>
 
 			<div id="sds_theme_options_social_media_rss_url_custom">
-				<strong><?php _e( 'Custom RSS Feed:', 'modern-real-estate' ); ?></strong>
+				<strong><?php _e( 'Custom RSS Feed:', 'modern-estate' ); ?></strong>
 				<input type="text" id="sds_theme_options_social_media_rss_url" name="sds_theme_options[social_media][rss_url]" class="large-text" value="<?php echo ( isset( $sds_theme_options['social_media']['rss_url'] ) && ! empty( $sds_theme_options['social_media']['rss_url'] ) ) ? esc_attr( esc_url( $sds_theme_options['social_media']['rss_url'] ) ) : false; ?>" />
 			</div>
 		<?php
@@ -462,18 +491,18 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 			<div class="wrap about-wrap">
 				<?php screen_icon(); // Default Screen Icon ?>
 
-				<h1><?php echo wp_get_theme(); ?> <?php _e( 'Theme Options', 'modern-real-estate' ); ?></h1>
-				<div class="about-text sds-about-text"><?php printf( __( '%1$s', 'modern-real-estate' ), self::$options_page_description ); ?></div>
+				<h1><?php echo wp_get_theme(); ?> <?php _e( 'Theme Options', 'modern-estate' ); ?></h1>
+				<div class="about-text sds-about-text"><?php printf( __( '%1$s', 'modern-estate' ), self::$options_page_description ); ?></div>
 
 				<?php do_action( 'sds_theme_options_notifications' ); ?>
 
 				<?php settings_errors(); ?>
 
 				<h2 class="nav-tab-wrapper sds-theme-options-tab-wrap">
-					<a href="#general" id="general-tab" class="nav-tab sds-theme-options-tab nav-tab-active"><?php _e( 'General Options', 'modern-real-estate' ); ?></a>
-					<a href="#social-media" id="social-media-tab" class="nav-tab sds-theme-options-tab"><?php _e( 'Social Media', 'modern-real-estate' ); ?></a>
+					<a href="#general" id="general-tab" class="nav-tab sds-theme-options-tab nav-tab-active"><?php _e( 'General Options', 'modern-estate' ); ?></a>
+					<a href="#social-media" id="social-media-tab" class="nav-tab sds-theme-options-tab"><?php _e( 'Social Media', 'modern-estate' ); ?></a>
 					<?php do_action( 'sds_theme_options_navigation_tabs' ); // Hook for extending tabs ?>
-					<a href="#help-support" id="help-support-tab" class="nav-tab sds-theme-options-tab"><?php _e( 'Help/Support', 'modern-real-estate' ); ?></a>
+					<a href="#help-support" id="help-support-tab" class="nav-tab sds-theme-options-tab"><?php _e( 'Help/Support', 'modern-estate' ); ?></a>
 				</h2>
 
 				<form method="post" action="options.php" enctype="multipart/form-data" id="sds-theme-options-form">
@@ -504,7 +533,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 					 */
 					?>
 					<div id="help-support-tab-content" class="sds-theme-options-tab-content">
-						<h3><?php _e( 'Help/Support', 'modern-real-estate' ); ?></h3>
+						<h3><?php _e( 'Help/Support', 'modern-estate' ); ?></h3>
 
 						<?php do_action( 'sds_theme_options_help_support_tab_content' ); ?>
 						<?php do_action( 'sds_theme_options_upgrade_cta', 'help-support' ); ?>
@@ -590,6 +619,7 @@ if ( ! class_exists( 'SDS_Theme_Options' ) ) {
 					'vimeo_url' => '',
 					'instagram_url' => '',
 					'pinterest_url' => '',
+					'flickr_url' => '',
 					//'yelp_url' => '',
 					'foursquare_url' => '',
 					'rss_url' => '',
