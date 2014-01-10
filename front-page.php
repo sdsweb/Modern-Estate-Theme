@@ -13,7 +13,7 @@ get_header(); ?>
 			sds_front_page_slider_sidebar(); // Front Page Slider Sidebar
 	?>
 		<section class="home-content inner-content front-page-content front-page cf">
-			<section class="<?php ( ! is_active_sidebar( 'front-page-sidebar' ) ) ? 'inner-block': false; ?> cf">
+			<section class="<?php echo ( ! is_active_sidebar( 'front-page-sidebar' ) ) ? 'inner-block': false; ?> cf">
 				<?php if ( is_active_sidebar( 'front-page-sidebar' ) ) : // Front Page Sidebar ?>
 					<section id="front-page-sidebar" class="front-page-sidebar">
 						<?php dynamic_sidebar( 'front-page-sidebar' ); ?>

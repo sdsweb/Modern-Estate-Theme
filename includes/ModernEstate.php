@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.6';
+	const ME_VERSION = '1.0.7';
 
 	private static $instance; // Keep track of the instance
 
@@ -111,15 +111,13 @@ class ModernEstate {
 		global $sds_theme_options;
 
 		$protocol = is_ssl() ? 'https' : 'http'; // Determine current protocol
-		$parent_stylesheet_uri = get_template_directory_uri() . '/style.css'; // Fetch parent stylesheet URI
-		$stylesheet_uri = get_stylesheet_uri(); // Fetch current stylesheet URI
 
 		// Modern Estate (main stylesheet)
-		wp_enqueue_style( 'modern-estate', $parent_stylesheet_uri, false, self::ME_VERSION );
+		wp_enqueue_style( 'modern-estate', get_template_directory_uri() . '/style.css', false, self::ME_VERSION );
 
 		// Enqueue the child theme stylesheet only if a child theme is active
-		if ( $parent_stylesheet_uri !== $stylesheet_uri )
-			wp_enqueue_style( 'modern-estate-child', $stylesheet_uri, array( 'modern-estate' ), self::ME_VERSION );
+		if ( is_child_theme() )
+			wp_enqueue_style( 'modern-estate-child', get_stylesheet_uri(), array( 'modern-estate' ), self::ME_VERSION );
 
 		// IE Stylesheet (conditional)
 		wp_enqueue_style( 'modern-estate-ie', get_template_directory_uri() . '/css/ie.css', false, self::ME_VERSION );
