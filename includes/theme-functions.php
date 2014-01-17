@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  * Description: This file contains functions for utilizing options within themes (displaying site logo, tagline, etc...)
  *
- * @version 1.1
+ * @version 1.2
  */
 
 
@@ -210,21 +210,21 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		if ( is_author() ) :
 			$author = get_user_by( 'slug', get_query_var( 'author_name' ) ); // Get user data by slug with value of author_name in query
 		?>
-			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title author-archive-title">
 				<?php _e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>
 			</h1>
 		<?php
 		// Categories
 		elseif ( is_category() ) :
 		?>
-			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>" class="page-title category-archive-title">
 				<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php 
 		// Tags
 		elseif ( is_tag() ) :
 		?>
-			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>" class="page-title tag-archive-title">
 				<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php
@@ -232,7 +232,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_day() ) :
 			$the_date = get_the_date();
 		?>
-			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title day-archive-title daily-archive-title">
 				<?php _e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -240,7 +240,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_month() ) :
 			$the_date = get_the_date( 'F Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title month-archive-title monthly-archive-title">
 				<?php _e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -248,7 +248,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_year() ) :
 			$the_date = get_the_date( 'Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title year-archive-title yearly-archive-title">
 				<?php _e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -315,7 +315,7 @@ if ( ! function_exists( 'sds_copyright' ) ) {
 			<?php echo apply_filters( 'sds_copyright', 'Copyright &copy; ' . date( 'Y' ) . ' <a href="' . esc_url( home_url() ) . '">' . get_bloginfo( 'name' ) . '</a>. All Rights Reserved.' ); ?>
 		</span>
 		<span class="slocum-credit">
-			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumthemes.com/" target="_blank">' . $theme_name . ' by Slocum Design Studio</a>', $theme_name ); ?>
+			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumthemes.com/" target="_blank">' . $theme_name . ' by Slocum Studio</a>', $theme_name ); ?>
 		</span>
 	<?php
 	}
@@ -517,6 +517,34 @@ if ( ! function_exists( 'sds_comment' ) ) {
 /***************************
  * Non-Pluggable Functions *
  ***************************/
+
+/**
+ * This function sets a flag if necessary to display a message to the user for creating a one-click child theme.
+ */
+add_action( 'after_switch_theme', 'sds_after_switch_theme' );
+
+function sds_after_switch_theme() {
+	// Make sure a child theme is not already active and that our activation flag is not already set
+	if( ! is_child_theme() && ! get_option( 'sds_theme_activated' ) )
+		update_option( 'sds_theme_activated', true );
+}
+
+/**
+ * This function outputs a message to the user on theme activation letting them know about our "one-click" child theme functionality.
+ */
+add_action( 'admin_notices', 'sds_admin_notices' );
+
+function sds_admin_notices() {
+	if( ! is_child_theme() && get_option( 'sds_theme_activated' ) ) :
+		$sds_theme = SDS_Theme_Options::instance()->theme;
+?>
+	<div class="updated" style="background-color: #5f87af; border-color: #354f6b; color:#fff;">
+		<p><?php printf( __( 'Thank you for activating %1$s! Looking to modify this theme outside of the Theme Options provided? Check our our <a href="%2$s" style="color:#fff; text-decoration: underline;">"One-Click" Child Themes</a>!', 'modern-estate' ), $sds_theme->get( 'Name' ), admin_url( 'themes.php?page=sds-theme-options#one-click-child-themes' ) ); ?></p>
+	</div>
+<?php
+		delete_option( 'sds_theme_activated' ); // Remove activation flag
+	endif;
+}
 
 /**
  * This function enqueues all necessary scripts/styles based on options.

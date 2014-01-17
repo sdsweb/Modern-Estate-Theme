@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.7';
+	const ME_VERSION = '1.0.8';
 
 	private static $instance; // Keep track of the instance
 
@@ -41,8 +41,8 @@ class ModernEstate {
 	 *    Functions to correspond with actions above (attempting to keep same order)    *
 	 ************************************************************************************/
 
-	/*
-	 * This function enables featured images for all post types and specifies additional image sizes.
+	/**
+	 * This function sets a flag if necessary to on theme activation.
 	 */
 	function after_switch_theme( $old_theme_name, $old_theme = false ) {
 		if( ! $me_activated_flag = get_option( 'me_activated' ) )
