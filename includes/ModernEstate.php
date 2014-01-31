@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.8';
+	const ME_VERSION = '1.0.9';
 
 	private static $instance; // Keep track of the instance
 
@@ -204,7 +204,7 @@ class ModernEstate {
 		$form_meta = RGFormsModel::get_form_meta( $form_id );
 
 		// Ensure the current form has one of our supported classes and alter the field accordingly if we're not on admin
-		if ( ! is_admin() && in_array( $form_meta['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+		if ( isset( $form['cssClass'] ) && ! is_admin() && in_array( $form_meta['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
 			$input = '<div class="ginput_container"><input name="input_' . $field['id'] . '" id="input_' . $form_id . '_' . $field['id'] . '" type="text" value="" class="large" placeholder="' . $field['label'] . '" /></div>';
 
 		return $input;
@@ -215,8 +215,8 @@ class ModernEstate {
 	 * .mc-gravity, .mc_gravity, .mc-newsletter, .mc_newsletter classes
 	 */
 	function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
-		// Ensure the current form has one of our supported classes and alter the confirmation accordingly if we're not on admin
-		if ( in_array( $form['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+		// Confirmation message is set and form has one of our supported classes (alter the confirmation accordingly)
+		if ( isset( $form['cssClass'] ) && $form['confirmation']['type'] === 'message' && in_array( $form['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
 			$confirmation = '<section class="mc-gravity-confirmation mc_gravity-confirmation mc-newsletter-confirmation mc_newsletter-confirmation">' . $confirmation . '</section>';
 
 		return $confirmation;
