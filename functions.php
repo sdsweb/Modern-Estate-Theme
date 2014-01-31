@@ -97,7 +97,7 @@ if ( ! function_exists( 'sds_theme_options_ads' ) ) {
 	?>
 		<div class="sds-theme-options-ad">
 			<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank" class="sds-theme-options-upgrade-ad">
-				<h2><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h2>
+				<h3><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h3>
 				<ul>
 					<li><?php _e( 'Priority Ticketing Support', 'modern-estate' ); ?></li>
 					<li><?php _e( 'More Color Schemes', 'modern-estate' ); ?></li>
