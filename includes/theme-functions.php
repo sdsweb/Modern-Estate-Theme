@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *
  * Description: This file contains functions for utilizing options within themes (displaying site logo, tagline, etc...)
  *
- * @version 1.1
+ * @version 1.2.1
  */
 
 
@@ -210,21 +210,21 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		if ( is_author() ) :
 			$author = get_user_by( 'slug', get_query_var( 'author_name' ) ); // Get user data by slug with value of author_name in query
 		?>
-			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>" class="page-title author-archive-title">
 				<?php _e( 'Author Archive:', 'modern-estate' ); ?> <?php echo ( $author instanceof WP_User ) ? $author->display_name : false; ?>
 			</h1>
 		<?php
 		// Categories
 		elseif ( is_category() ) :
 		?>
-			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+			<h1 title="<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>" class="page-title category-archive-title">
 				<?php single_cat_title( __( 'Category Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php 
 		// Tags
 		elseif ( is_tag() ) :
 		?>
-			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>" class="page-title">
+			<h1 title="<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>" class="page-title tag-archive-title">
 				<?php single_tag_title( __( 'Tag Archive: ', 'modern-estate' ) ); ?>
 			</h1>
 		<?php
@@ -232,7 +232,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_day() ) :
 			$the_date = get_the_date();
 		?>
-			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title day-archive-title daily-archive-title">
 				<?php _e( 'Daily Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -240,7 +240,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_month() ) :
 			$the_date = get_the_date( 'F Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title month-archive-title monthly-archive-title">
 				<?php _e( 'Monthly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -248,7 +248,7 @@ if ( ! function_exists( 'sds_archive_title' ) ) {
 		elseif ( is_year() ) :
 			$the_date = get_the_date( 'Y' );
 		?>
-			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title">
+			<h1 title="<?php esc_attr_e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>" class="page-title year-archive-title yearly-archive-title">
 				<?php _e( 'Yearly Archives:', 'modern-estate' ); ?> <?php echo $the_date; ?>
 			</h1>
 		<?php
@@ -315,7 +315,7 @@ if ( ! function_exists( 'sds_copyright' ) ) {
 			<?php echo apply_filters( 'sds_copyright', 'Copyright &copy; ' . date( 'Y' ) . ' <a href="' . esc_url( home_url() ) . '">' . get_bloginfo( 'name' ) . '</a>. All Rights Reserved.' ); ?>
 		</span>
 		<span class="slocum-credit">
-			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumthemes.com/" target="_blank">' . $theme_name . ' by Slocum Design Studio</a>', $theme_name ); ?>
+			<?php echo apply_filters( 'sds_copyright_branding', '<a href="http://slocumthemes.com/" target="_blank">' . $theme_name . ' by Slocum Studio</a>', $theme_name ); ?>
 		</span>
 	<?php
 	}
@@ -517,6 +517,35 @@ if ( ! function_exists( 'sds_comment' ) ) {
 /***************************
  * Non-Pluggable Functions *
  ***************************/
+
+/**
+ * This function ties into the TGM Plugin Activation Class and recommends plugins to the user.
+ */
+add_action( 'tgmpa_register', 'sds_tgmpa_register' );
+
+function sds_tgmpa_register() {
+	$plugins = array(
+		// One-Click Child Themes for Slocum Themes
+		array(
+			'name' => 'One-Click Child Themes for Slocum Themes',
+			'slug' => 'sds-one-click-child-themes-master',
+			'source' => 'https://github.com/sdsweb/sds-one-click-child-themes/archive/master.zip',
+			'required' => false,
+			'force_activation' => false,
+			'force_deactivation' => false,
+			'external_url' => 'https://github.com/sdsweb/sds-one-click-child-themes/'
+		),
+ 
+        // Soliloquy
+        array(
+            'name'      => 'Soliloquy Lite',
+            'slug'      => 'soliloquy-lite',
+            'required'  => false
+        )
+	);
+
+	tgmpa( $plugins );
+}
 
 /**
  * This function enqueues all necessary scripts/styles based on options.

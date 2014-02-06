@@ -4,9 +4,13 @@
  */
 
 get_header(); ?>
-
 	<?php get_template_part( 'yoast', 'breadcrumbs' ); // Yoast Breadcrumbs ?>
 
+	<?php
+		// Front page is blogroll
+		if ( get_option( 'show_on_front' ) === 'page' && ! get_option( 'page_on_front' ) )
+			sds_front_page_slider_sidebar(); // Front Page Slider Sidebar
+	?>
 	<section class="inner-content cf">
 		<?php tha_content_before(); ?>
 		<section class="inner-block blog-archive content-wrapper cf">

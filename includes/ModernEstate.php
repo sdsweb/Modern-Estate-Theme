@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.5';
+	const ME_VERSION = '1.0.9';
 
 	private static $instance; // Keep track of the instance
 
@@ -41,8 +41,8 @@ class ModernEstate {
 	 *    Functions to correspond with actions above (attempting to keep same order)    *
 	 ************************************************************************************/
 
-	/*
-	 * This function enables featured images for all post types and specifies additional image sizes.
+	/**
+	 * This function sets a flag if necessary to on theme activation.
 	 */
 	function after_switch_theme( $old_theme_name, $old_theme = false ) {
 		if( ! $me_activated_flag = get_option( 'me_activated' ) )
@@ -111,15 +111,13 @@ class ModernEstate {
 		global $sds_theme_options;
 
 		$protocol = is_ssl() ? 'https' : 'http'; // Determine current protocol
-		$parent_stylesheet_uri = get_template_directory_uri() . '/style.css'; // Fetch parent stylesheet URI
-		$stylesheet_uri = get_stylesheet_uri(); // Fetch current stylesheet URI
 
 		// Modern Estate (main stylesheet)
-		wp_enqueue_style( 'modern-estate', $parent_stylesheet_uri, false, self::ME_VERSION );
+		wp_enqueue_style( 'modern-estate', get_template_directory_uri() . '/style.css', false, self::ME_VERSION );
 
 		// Enqueue the child theme stylesheet only if a child theme is active
-		if ( $parent_stylesheet_uri !== $stylesheet_uri )
-			wp_enqueue_style( 'modern-estate-child', $stylesheet_uri, array( 'modern-estate' ), self::ME_VERSION );
+		if ( is_child_theme() )
+			wp_enqueue_style( 'modern-estate-child', get_stylesheet_uri(), array( 'modern-estate' ), self::ME_VERSION );
 
 		// IE Stylesheet (conditional)
 		wp_enqueue_style( 'modern-estate-ie', get_template_directory_uri() . '/css/ie.css', false, self::ME_VERSION );
@@ -206,7 +204,7 @@ class ModernEstate {
 		$form_meta = RGFormsModel::get_form_meta( $form_id );
 
 		// Ensure the current form has one of our supported classes and alter the field accordingly if we're not on admin
-		if ( ! is_admin() && in_array( $form_meta['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+		if ( isset( $form['cssClass'] ) && ! is_admin() && in_array( $form_meta['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
 			$input = '<div class="ginput_container"><input name="input_' . $field['id'] . '" id="input_' . $form_id . '_' . $field['id'] . '" type="text" value="" class="large" placeholder="' . $field['label'] . '" /></div>';
 
 		return $input;
@@ -217,8 +215,8 @@ class ModernEstate {
 	 * .mc-gravity, .mc_gravity, .mc-newsletter, .mc_newsletter classes
 	 */
 	function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
-		// Ensure the current form has one of our supported classes and alter the confirmation accordingly if we're not on admin
-		if ( in_array( $form['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+		// Confirmation message is set and form has one of our supported classes (alter the confirmation accordingly)
+		if ( isset( $form['cssClass'] ) && $form['confirmation']['type'] === 'message' && in_array( $form['cssClass'], array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
 			$confirmation = '<section class="mc-gravity-confirmation mc_gravity-confirmation mc-newsletter-confirmation mc_newsletter-confirmation">' . $confirmation . '</section>';
 
 		return $confirmation;

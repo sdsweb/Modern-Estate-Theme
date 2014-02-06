@@ -6,6 +6,9 @@
  *
  * Load the theme function files (options panel, theme functions, widgets, etc...).
  */
+
+include_once get_template_directory() . '/includes/class-tgm-plugin-activation.php'; // TGM Activation
+
 include_once get_template_directory() . '/includes/theme-options.php'; // SDS Theme Options
 include_once get_template_directory() . '/includes/theme-functions.php'; // SDS Theme Options Functions
 include_once get_template_directory() . '/includes/widget-social-media.php'; // SDS Social Media Widget
@@ -94,7 +97,7 @@ if ( ! function_exists( 'sds_theme_options_ads' ) ) {
 	?>
 		<div class="sds-theme-options-ad">
 			<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank" class="sds-theme-options-upgrade-ad">
-				<h2><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h2>
+				<h3><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h3>
 				<ul>
 					<li><?php _e( 'Priority Ticketing Support', 'modern-estate' ); ?></li>
 					<li><?php _e( 'More Color Schemes', 'modern-estate' ); ?></li>
