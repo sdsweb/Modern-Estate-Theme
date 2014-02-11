@@ -143,7 +143,7 @@ if ( ! function_exists( 'sds_theme_options_help_support_tab_content' ) ) {
 
 	function sds_theme_options_help_support_tab_content( ) {
 	?>
-		<p><?php printf( __( 'If you\'d like to create a suppport request, please visit the %1$s.', 'modern-estate' ), '<a href="http://wordpress.org/themes/modern-estate" target="_blank">Modern Estate Forums on WordPress.org</a>' ); ?></p>
+		<p><?php printf( __( 'If you\'d like to create a support request, please visit the %1$s.', 'modern-estate' ), '<a href="http://wordpress.org/themes/modern-estate" target="_blank">Modern Estate Forums on WordPress.org</a>' ); ?></p>
 	<?php
 	}
 }

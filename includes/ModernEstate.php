@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.9';
+	const ME_VERSION = '1.1.0';
 
 	private static $instance; // Keep track of the instance
 
@@ -24,12 +24,13 @@ class ModernEstate {
 	 * This function sets up all of the actions and filters on instance
 	 */
 	function __construct() {
-		add_action( 'after_switch_theme', array( $this, 'after_switch_theme' ), 10, 2 ); // Notify users of Easy Real Estate (included with theme)
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) ); // Enable Featured Images, Specify additional image sizes
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) ); // Register sidebars
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) ); // Enqueue all stylesheets (Main Stylesheet, Fonts, etc...)
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) ); // Responsive navigation functionality
+
+		// TGM Plugin Activation
+		add_action( 'sds_tgmpa_plugins', array( $this, 'sds_tgmpa_plugins' ) );
 
 		// Gravity Forms
 		add_filter( 'gform_field_input', array( $this, 'gform_field_input' ), 10, 5 ); // Add placholder to newsletter form
@@ -40,30 +41,6 @@ class ModernEstate {
 	/************************************************************************************
 	 *    Functions to correspond with actions above (attempting to keep same order)    *
 	 ************************************************************************************/
-
-	/**
-	 * This function sets a flag if necessary to on theme activation.
-	 */
-	function after_switch_theme( $old_theme_name, $old_theme = false ) {
-		if( ! $me_activated_flag = get_option( 'me_activated' ) )
-			update_option( 'me_activated', true );
-	}
-
-	/*
-	 * This function displays an admin notice when called via the admin_notices action.
-	 * @used_by after_setup_theme
-	 */
-	function admin_notices() {
-		if( get_option( 'me_activated' ) && ! is_plugin_active( 'easy-real-estate/easy-real-estate.php' ) ) :
-	?>
-		<div class="updated" style="background-color: #5f87af; border-color: #354f6b; color:#fff;">
-			<p>Thank you for activating Modern Estate! Don't forget about the <strong>Easy Real Estate Plugin</strong> located on Github: <a href="http://github.com/sdsweb/Easy-Real-Estate-Plugin/" target="_blank" style="color:#fff; text-decoration: underline;">http://github.com/sdsweb/Easy-Real-Estate-Plugin/</a>. You may download the Easy Real Estate plugin by clicking <a href="https://github.com/sdsweb/Easy-Real-Estate-Plugin/archive/master.zip" style="color:#fff; text-decoration: underline;">here</a>. This message only appears on theme activation.</p>
-		</div>
-	<?php
-		endif;
-
-		delete_option( 'me_activated' );
-	}
 
 	/*
 	 * This function specifies additional image sizes.
@@ -87,6 +64,9 @@ class ModernEstate {
 	 */
 	function widgets_init() {
 		global $wp_registered_sidebars;
+
+		// Remove secondary sidebar registered in options panel
+		unregister_sidebar( 'secondary-sidebar' );
 
 		// Footer Left (insert after 'after-posts-sidebar')
 		$footer_left_sidebar = array(
@@ -191,6 +171,30 @@ class ModernEstate {
 		// No key found, return the original array
 		return $array;
 	}
+
+
+	/*************************
+	 * TGM Plugin Activation *
+	 *************************/
+
+	/**
+	 * This function ties into the TGM Plugin Activation Class and recommends plugins to the user.
+	 */
+	function sds_tgmpa_plugins( $plugins ) {
+		// Easy Real Estate
+		$plugins[] = array(
+			'name' => 'Easy Real Estate',
+			'slug' => 'easy-real-rstate-plugin-master',
+			'source' => 'https://github.com/sdsweb/easy-real-rstate-plugin/archive/master.zip',
+			'required' => false,
+			'force_activation' => false,
+			'force_deactivation' => false,
+			'external_url' => 'https://github.com/sdsweb/easy-real-rstate-plugin/'
+		);
+
+		return $plugins;
+	}
+
 
 	/*****************
 	 * Gravity Forms *
