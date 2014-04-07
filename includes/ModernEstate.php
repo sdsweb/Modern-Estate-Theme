@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.1.1';
+	const ME_VERSION = '1.1.3';
 
 	private static $instance; // Keep track of the instance
 
@@ -24,7 +24,7 @@ class ModernEstate {
 	 * This function sets up all of the actions and filters on instance
 	 */
 	function __construct() {
-		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) ); // Enable Featured Images, Specify additional image sizes
+		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 ); // Enable Featured Images, Specify additional image sizes
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) ); // Register sidebars
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) ); // Enqueue all stylesheets (Main Stylesheet, Fonts, etc...)
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) ); // Responsive navigation functionality
@@ -55,6 +55,13 @@ class ModernEstate {
 
 		// Remove footer nav which is registered in options panel
 		unregister_nav_menu( 'footer_nav' );
+
+		// Change default core markup for search form, comment form, and comments, etc... to HTML5
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list'
+		) );
 	}
 
 	/*

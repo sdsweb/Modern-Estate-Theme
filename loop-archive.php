@@ -16,7 +16,7 @@
 			</section>
 		<?php endif; ?>
 
-		<section class="news-block-info blog-post-content cf <?php echo ( has_post_thumbnail() ) ? 'news-block-info-featured-image' : 'news-block-info-no-image'; ?>"">
+		<section class="news-block-info blog-post-content cf <?php echo ( has_post_thumbnail() ) ? 'news-block-info-featured-image' : 'news-block-info-no-image'; ?>">
 			<p class="home-block-date">
 				<?php
 					if ( strlen( get_the_title() ) > 0 ) :
