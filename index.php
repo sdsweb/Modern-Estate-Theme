@@ -14,6 +14,8 @@ get_header(); ?>
 
 			<?php get_template_part( 'loop' ); // Loop ?>
 
+			<section class="clear"></section>
+
 			<?php tha_comments_before(); ?>
 			<?php comments_template(); // Comments ?>
 			<?php tha_comments_after(); ?>
