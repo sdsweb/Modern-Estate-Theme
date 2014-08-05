@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.0.9';
+	const ME_VERSION = '1.1.9';
 
 	private static $instance; // Keep track of the instance
 
@@ -24,12 +24,19 @@ class ModernEstate {
 	 * This function sets up all of the actions and filters on instance
 	 */
 	function __construct() {
-		add_action( 'after_switch_theme', array( $this, 'after_switch_theme' ), 10, 2 ); // Notify users of Easy Real Estate (included with theme)
-		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ) ); // Enable Featured Images, Specify additional image sizes
+		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 ); // Enable Featured Images, Specify additional image sizes
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) ); // Register sidebars
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) ); // Add Meta Boxes
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) ); // Enqueue all stylesheets (Main Stylesheet, Fonts, etc...)
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) ); // Responsive navigation functionality
+
+		// TGM Plugin Activation
+		add_action( 'sds_tgmpa_plugins', array( $this, 'sds_tgmpa_plugins' ) );
+
+		// Theme Customizer
+		add_action( 'customize_register', array( $this, 'customize_register' ), 20 ); // Switch background properties to use refresh transport method
+		add_action( 'customize_controls_print_styles', array( $this, 'customize_controls_print_styles' ), 20 ); // Customizer Styles
+		add_filter( 'theme_mod_content_color', array( $this, 'theme_mod_content_color' ) ); // Set the default content color
 
 		// Gravity Forms
 		add_filter( 'gform_field_input', array( $this, 'gform_field_input' ), 10, 5 ); // Add placholder to newsletter form
@@ -41,34 +48,18 @@ class ModernEstate {
 	 *    Functions to correspond with actions above (attempting to keep same order)    *
 	 ************************************************************************************/
 
-	/**
-	 * This function sets a flag if necessary to on theme activation.
-	 */
-	function after_switch_theme( $old_theme_name, $old_theme = false ) {
-		if( ! $me_activated_flag = get_option( 'me_activated' ) )
-			update_option( 'me_activated', true );
-	}
-
-	/*
-	 * This function displays an admin notice when called via the admin_notices action.
-	 * @used_by after_setup_theme
-	 */
-	function admin_notices() {
-		if( get_option( 'me_activated' ) && ! is_plugin_active( 'easy-real-estate/easy-real-estate.php' ) ) :
-	?>
-		<div class="updated" style="background-color: #5f87af; border-color: #354f6b; color:#fff;">
-			<p>Thank you for activating Modern Estate! Don't forget about the <strong>Easy Real Estate Plugin</strong> located on Github: <a href="http://github.com/sdsweb/Easy-Real-Estate-Plugin/" target="_blank" style="color:#fff; text-decoration: underline;">http://github.com/sdsweb/Easy-Real-Estate-Plugin/</a>. You may download the Easy Real Estate plugin by clicking <a href="https://github.com/sdsweb/Easy-Real-Estate-Plugin/archive/master.zip" style="color:#fff; text-decoration: underline;">here</a>. This message only appears on theme activation.</p>
-		</div>
-	<?php
-		endif;
-
-		delete_option( 'me_activated' );
-	}
-
 	/*
 	 * This function specifies additional image sizes.
 	 */
 	function after_setup_theme() {
+		global $content_width;
+
+		/**
+		 * Set the Content Width for embeded items.
+		 */
+		if ( ! isset( $content_width ) )
+			$content_width = 685;
+
 		// Theme Hook Alliance support
 		add_theme_support( 'tha_hooks', array( 'all' ) );
 
@@ -78,6 +69,25 @@ class ModernEstate {
 
 		// Remove footer nav which is registered in options panel
 		unregister_nav_menu( 'footer_nav' );
+
+		// Change default core markup for search form, comment form, and comments, etc... to HTML5
+		add_theme_support( 'html5', array(
+			'search-form',
+			'comment-form',
+			'comment-list'
+		) );
+
+		// Custom Background (color/image)
+		$custom_background_args = array();
+
+		// Check for color scheme default value
+		if ( ( $selected_color_scheme = sds_get_color_scheme( false ) ) && isset( $selected_color_scheme['background_color'] ) )
+			$custom_background_args['default-color'] = $selected_color_scheme['background_color'];
+
+		add_theme_support( 'custom-background', $custom_background_args );
+
+		// Theme textdomain
+		load_theme_textdomain( 'modern-estate', get_template_directory() . '/languages' );
 	}
 
 	/*
@@ -87,6 +97,9 @@ class ModernEstate {
 	 */
 	function widgets_init() {
 		global $wp_registered_sidebars;
+
+		// Remove secondary sidebar registered in options panel
+		unregister_sidebar( 'secondary-sidebar' );
 
 		// Footer Left (insert after 'after-posts-sidebar')
 		$footer_left_sidebar = array(
@@ -102,6 +115,53 @@ class ModernEstate {
 
 		$wp_registered_sidebars = $this->array_insert_after( $wp_registered_sidebars, 'after-posts-sidebar', 'footer-left-sidebar', $footer_left_sidebar );
 		do_action( 'register_sidebar', $footer_left_sidebar );
+	}
+
+	/**
+	 * This function runs when meta boxes are added.
+	 */
+	function add_meta_boxes() {
+		// Post types
+		$post_types = get_post_types(
+			array(
+				'public' => true,
+				'_builtin' => false
+			)
+		);
+		$post_types[] = 'post';
+		$post_types[] = 'page';
+
+		// Add the metabox for each type
+		foreach ( $post_types as $type ) {
+			add_meta_box(
+				'modern-estate-us-metabox',
+				__( 'Layout Settings', 'modern-estate' ),
+				array( $this, 'modern_estate_us_metabox' ),
+				$type,
+				'side',
+				'default'
+			);
+		}
+	}
+
+	/**
+	 * This function renders a metabox.
+	 */
+	function modern_estate_us_metabox( $post ) {
+		// Get the post type label
+		$post_type = get_post_type_object( $post->post_type );
+		$label = ( isset( $post_type->labels->singular_name ) ) ? $post_type->labels->singular_name : __( 'Post' );
+
+		echo '<p class="howto">';
+		printf(
+			__( 'Looking to configure a unique layout for this %1$s? %2$s.', 'modern-estate' ),
+			esc_html( strtolower( $label ) ),
+			sprintf(
+				'<a href="%1$s" target="_blank">Upgrade to Pro</a>',
+				esc_url( sds_get_pro_link( 'metabox-layout-settings' ) )
+			)
+		);
+		echo '</p>';
 	}
 
 	/*
@@ -161,6 +221,100 @@ class ModernEstate {
 	<?php
 	}
 
+	/********************
+	 * Theme Customizer *
+	 ********************/
+
+	/**
+	 * This function is run when the Theme Customizer is loaded.
+	 */
+	function customize_register( $wp_customize ) {
+		$wp_customize->add_section( 'modern_estate_us', array(
+			'title' => __( 'Upgrade Modern Estate', 'modern-estate' ),
+			'priority' => 1
+		) );
+
+		$wp_customize->add_setting(
+			'modern_estate_us', // IDs can have nested array keys
+			array(
+				'default' => false,
+				'type' => 'modern_estate_us'
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_US_Control(
+				$wp_customize,
+				'modern_estate_us',
+				array(
+					'content'  => sprintf(
+						__( '<strong>Premium support</strong>, more Customizer options, color schemes, web fonts, and more! %s.', 'modern-estate' ),
+						sprintf(
+							'<a href="%1$s" target="_blank">%2$s</a>',
+							esc_url( sds_get_pro_link( 'customizer' ) ),
+							__( 'Upgrade to Pro', 'modern-estate' )
+						)
+					),
+					'section' => 'modern_estate_us',
+				)
+			)
+		);
+
+		$wp_customize->get_section( 'colors' )->description = sprintf(
+			__( 'Looking for more color customizations? %s.', 'modern-estate' ),
+			sprintf(
+				'<a href="%1$s" target="_blank">%2$s</a>',
+				esc_url( sds_get_pro_link( 'customizer-colors' ) ),
+				__( 'Upgrade to Pro', 'modern-estate' )
+			)
+		);
+	}
+
+	/**
+	 * This function is run when the Theme Customizer is printing styles.
+	 */
+	function customize_controls_print_styles() {
+	?>
+		<style type="text/css">
+			#accordion-section-modern_estate_us .accordion-section-title,
+			#customize-theme-controls #accordion-section-modern_estate_us .accordion-section-title:focus,
+			#customize-theme-controls #accordion-section-modern_estate_us .accordion-section-title:hover,
+			#customize-theme-controls #accordion-section-modern_estate_us .control-section.open .accordion-section-title,
+			#customize-theme-controls #accordion-section-modern_estate_us:hover .accordion-section-title,
+			#accordion-section-modern_estate_us .accordion-section-title:active {
+				background: #444;
+				color: #fff;
+			}
+
+			#accordion-section-modern_estate_us .accordion-section-title:after,
+			#customize-theme-controls #accordion-section-modern_estate_us .accordion-section-title:focus::after,
+			#customize-theme-controls #accordion-section-modern_estate_us .accordion-section-title:hover::after,
+			#customize-theme-controls #accordion-section-modern_estate_us.open .accordion-section-title::after,
+			#customize-theme-controls #accordion-section-modern_estate_us:hover .accordion-section-title::after {
+				color: #fff;
+			}
+		</style>
+	<?php
+	}
+
+	/**
+	 * This function sets the default color for the content area in the Theme Customizer.
+	 */
+	function theme_mod_content_color( $color ) {
+		// Return the current color if set
+		if ( $color )
+			return $color;
+
+		// Return the selected color scheme content color if set
+		if ( $selected_color_scheme = sds_get_color_scheme() )
+			return $selected_color_scheme['content_color'];
+
+		// Load all color schemes for this theme
+		$color_schemes = sds_color_schemes();
+
+		// Return the default color scheme content color
+		return $color_schemes['default']['content_color'];
+	}
 
 	/**
 	 * Internal Functions (functions used internally throughout this class)
@@ -191,6 +345,30 @@ class ModernEstate {
 		// No key found, return the original array
 		return $array;
 	}
+
+
+	/*************************
+	 * TGM Plugin Activation *
+	 *************************/
+
+	/**
+	 * This function ties into the TGM Plugin Activation Class and recommends plugins to the user.
+	 */
+	function sds_tgmpa_plugins( $plugins ) {
+		// Easy Real Estate
+		$plugins[] = array(
+			'name' => 'Easy Real Estate',
+			'slug' => 'easy-real-rstate-plugin-master',
+			'source' => 'https://github.com/sdsweb/easy-real-rstate-plugin/archive/master.zip',
+			'required' => false,
+			'force_activation' => false,
+			'force_deactivation' => false,
+			'external_url' => 'https://github.com/sdsweb/easy-real-rstate-plugin/'
+		);
+
+		return $plugins;
+	}
+
 
 	/*****************
 	 * Gravity Forms *

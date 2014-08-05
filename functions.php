@@ -7,15 +7,16 @@
  * Load the theme function files (options panel, theme functions, widgets, etc...).
  */
 
+include_once get_template_directory() . '/includes/ModernEstate.php'; // Modern Estate Class (main functionality, actions/filters)
+
 include_once get_template_directory() . '/includes/class-tgm-plugin-activation.php'; // TGM Activation
 
 include_once get_template_directory() . '/includes/theme-options.php'; // SDS Theme Options
 include_once get_template_directory() . '/includes/theme-functions.php'; // SDS Theme Options Functions
+include_once get_template_directory() . '/includes/class-customize-us-control.php'; // Customize Controller
 include_once get_template_directory() . '/includes/widget-social-media.php'; // SDS Social Media Widget
 
 include_once get_template_directory() . '/includes/tha-theme-hooks.php'; // Theme Hook Alliance
-
-include_once get_template_directory() . '/includes/ModernEstate.php'; // Modern Estate Class (main functionality, actions/filters)
 
 
 /**
@@ -23,12 +24,6 @@ include_once get_template_directory() . '/includes/ModernEstate.php'; // Modern 
  * Theme Specifics
  * ---------------
  */
-
-/**
- * Set the Content Width for embeded items.
- */
-if ( ! isset( $content_width ) )
-	$content_width = 685;
 
 /**
  * This function outputs the Footer Sidebar.
@@ -48,12 +43,16 @@ if ( ! function_exists( 'sds_color_schemes' ) ) {
 				'label' => 'Blue', // Label on options panel (required)
 				'stylesheet' => false, // Stylesheet URL, relative to theme directory (required)
 				'preview' => '#36506a', // Preview color on options panel (required)
+				'content_color' => '#363636', // Default content color (required)
+				'background_color' => '#2b4c6c', // Default background color (optional)
 				'default' => true
 			),
 			'gray' => array(
 				'label' => 'Gray',
 				'stylesheet' => '/css/gray.css',
 				'preview' => '#acacac',
+				'content_color' => '#363636',
+				'background_color' => '#acacac',
 				'deps' => 'modern-estate'
 			)
 		);
@@ -90,13 +89,32 @@ if ( ! function_exists( 'sds_theme_options_default_featured_image_size' ) ) {
 	}
 }
 
+/**
+ * This function adds the custom Theme Customizer styles to the <head> tag.
+ */
+if ( ! function_exists( 'me_wp_head' ) ) {
+	add_filter( 'wp_head', 'me_wp_head', 20 );
+
+	function me_wp_head() {
+		$sds_theme_options_instance = SDS_Theme_Options_Instance();
+	?>
+		<style type="text/css" id="<?php echo $sds_theme_options_instance->get_parent_theme()->get_template(); ?>-theme-customizer">
+			/* Content Color */
+			.blog-post, .inner-block, .news-block, footer.post-footer, #post-author, .post-content {
+				color: <?php echo get_theme_mod( 'content_color' ); ?>;
+			}
+		</style>
+	<?php
+	}
+}
+
 if ( ! function_exists( 'sds_theme_options_ads' ) ) {
 	add_action( 'sds_theme_options_ads', 'sds_theme_options_ads' );
 
 	function sds_theme_options_ads() {
 	?>
 		<div class="sds-theme-options-ad">
-			<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank" class="sds-theme-options-upgrade-ad">
+			<a href="<?php echo esc_url( sds_get_pro_link( 'theme-options-ad' ) ); ?>" target="_blank" class="sds-theme-options-upgrade-ad">
 				<h3><?php _e( 'Upgrade to Modern Estate Pro!', 'modern-estate' ); ?></h3>
 				<ul>
 					<li><?php _e( 'Priority Ticketing Support', 'modern-estate' ); ?></li>
@@ -120,22 +138,50 @@ if ( ! function_exists( 'sds_theme_options_upgrade_cta' ) ) {
 	function sds_theme_options_upgrade_cta( $type ) {
 		switch( $type ) :
 			case 'color-schemes':
-			?>
-				<p><?php printf( __( '%1$s and receive more color schemes!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
-			<?php
+		?>
+				<p>
+					<?php
+						printf( '<a href="%1$s" target="_blank">%2$s</a> %3$s',
+							esc_url( sds_get_pro_link( 'theme-options-colors' ) ),
+							__( 'Upgrade to Modern Estate Pro', 'modern-estate' ),
+							__( 'and receive more color schemes!', 'modern-estate' )
+						);
+					?>
+				</p>
+		<?php
 			break;
 			case 'web-fonts':
-			?>
-				<p><?php printf( __( '%1$s to use more web fonts!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
-			<?php
+		?>
+				<p>
+					<?php
+						printf( '<a href="%1$s" target="_blank">%2$s</a> %3$s',
+							esc_url( sds_get_pro_link( 'theme-options-fonts' ) ),
+							__( 'Upgrade to Modern Estate Pro', 'modern-estate' ),
+							__( 'to use more web fonts!', 'modern-estate' )
+						);
+					?>
+				</p>
+		<?php
 			break;
 			case 'help-support':
-			?>
-				<p><?php printf( __( '%1$s to receive priority ticketing support!', 'modern-estate' ), '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-theme" target="_blank">Upgrade to Modern Estate Pro</a>' ); ?></p>
-			<?php
+		?>
+				<p>
+					<?php
+						printf( '<a href="%1$s" target="_blank">%2$s</a> %3$s',
+							esc_url( sds_get_pro_link( 'theme-options-help' ) ),
+							__( 'Upgrade to Modern Estate Pro', 'modern-estate' ),
+							__( 'to receive priority ticketing support!', 'modern-estate' )
+						);
+					?>
+				</p>
+		<?php
 			break;
 		endswitch;
 	}
+}
+
+function sds_get_pro_link( $content ) {
+	return esc_url( 'https://slocumthemes.com/wordpress-themes/modern-estate-theme/?utm_source=modern-estate&utm_medium=link&utm_content=' . urlencode( sanitize_title_with_dashes( $content ) ) . '&utm_campaign=pro#purchase-theme' );
 }
 
 if ( ! function_exists( 'sds_theme_options_help_support_tab_content' ) ) {
@@ -143,7 +189,7 @@ if ( ! function_exists( 'sds_theme_options_help_support_tab_content' ) ) {
 
 	function sds_theme_options_help_support_tab_content( ) {
 	?>
-		<p><?php printf( __( 'If you\'d like to create a suppport request, please visit the %1$s.', 'modern-estate' ), '<a href="http://wordpress.org/themes/modern-estate" target="_blank">Modern Estate Forums on WordPress.org</a>' ); ?></p>
+		<p><?php printf( __( 'If you\'d like to create a support request, please visit the <a href="%1$s">Modern Estate Forums on WordPress.org</a>.', 'modern-estate' ), esc_url( 'http://wordpress.org/support/theme/modern-estate/' ) ); ?></p>
 	<?php
 	}
 }
@@ -152,6 +198,6 @@ if ( ! function_exists( 'sds_copyright_branding' ) ) {
 	add_filter( 'sds_copyright_branding', 'sds_copyright_branding', 10, 2 );
 
 	function sds_copyright_branding( $text, $theme_name ) {
-		return '<a href="http://slocumthemes.com/wordpress-themes/modern-estate-free/" target="_blank">' . sprintf( __( '%1$s by Slocum Studio', 'modern-estate' ), $theme_name ) . '</a>';
+		return sprintf( __( '<a href="%1$s">%2$s by Slocum Studio</a>', 'modern-estate' ), esc_url( 'http://slocumthemes.com/wordpress-themes/modern-estate-free/' ), $theme_name );
 	}
 }

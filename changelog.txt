@@ -1,0 +1,113 @@
+==========================================
+Theme: Modern Estate Free
+Author: Slocum Themes/Slocum Design Studio
+Author URI: http://slocumthemes.com
+Current Version: 1.1.9
+==========================================
+
+1.1.9 // July 02 2014
+---------------------
+- Updated to latest version of SDS Core
+- Updated CSS to accommodate new HTML markup
+- Adjusted CSS for Yoast Breadcrumbs
+
+1.1.7 // June 04 2014
+---------------------
+- Updated to latest version of SDS Core (contains fixes for Theme Customizer and fixes PHP warnings)
+- Fixed clearing display bug (comments)
+- Better bbPress & BuddyPress support
+- Update .pot file
+
+1.1.6 // April 23 2014
+----------------------
+- Added functionality to adjust background/content color defaults based on color scheme selected in Theme Options
+- Updated to latest version of SDS Core
+- Added load_theme_textdomain() function and .pot translation file
+- Moved $content_width declaration into after_setup_theme hook
+
+1.1.5 // April 18 2014
+----------------------
+- Updated to latest verison of SDS Core (contains bugfix in logo contoller and new filter for web fonts)
+
+1.1.4
+-----
+- Updating to latest version of SDS Core (Theme Customizer)
+- Added various bits of Theme Customizer functionality
+
+1.1.3
+-----
+- Added HTML5 support for various default elements (search form, comments-form, comments-list)
+- Updated to newest version of SDS Core ("Default" Web Font Label)
+- Changed order of files loaded in functions.php
+- Fixed styling on mobile navigation elements
+- Fixed bug where the primary fallback navigation was not working properly when in responsive view
+- Removed extra quotation mark (") from loop-archive.php template from the "news-block-info" element
+- Fixed z-index bug on sub menu elements (same as Minimize)
+
+1.1.1
+-----
+- Escaping URLs in functions.php
+
+1.1.0
+-----
+- Removed max-height on featured images (allows full featured image to be displayed now)
+- Added Easy Real Estate to TGM Plugin Activation class (removed old admin notices)
+- Updated to newest version of SDS Core (Content Layout Options) - CONTENT LAYOUT OPTIONS IN NEXT VERSION
+- Unregistered secondary sidebar as it is not currently used
+
+1.0.9
+-----
+- Fixed issue with Gravity Forms confirmation hook - was breaking page/re-direct confirmation functionality
+- Checking to verify Gravity Forms cssClass isset in our hooks (fixes PHP warning)
+- Updated to latest SDS Core (contains TGM Activation Class)
+
+1.0.8
+-----
+- Updated SDS Core ("One-Click" Child Themes)
+- Updated function header for after_switch_themes hook in ModernEstate class
+
+1.0.7
+-----
+- Switched child theme functionality check to use is_child_theme()
+- Fixed issue with missing 'echo' statement on front page template
+
+1.0.6
+-----
+- Updated theme tags - added fluid-layout, responsive-layout
+- Updated home template to allow Front Page Slider to appear when blogroll is set to front page (front page option is selected, but no front page actually is chosen)
+
+1.0.5
+-----
+- Updated to latest version of SDS Core (includes new Toolbar menu for Theme Options)
+- Removed attribution to Yoast Breadcrumbs per: http://themes.trac.wordpress.org/ticket/14861#comment:23
+- Fixed spelling mistakes in theme description
+- Updated call to stylesheets: parent stylesheet is always loaded and a child theme stylesheet is now enqueued if a child theme is enabled
+
+1.0.4
+-----
+- Added styles for MailChimp Gravity Form CTA for Newsletters using .mc-gravity, .mc_gravity, .mc-newsletter, .mc_newsletter classes
+
+1.0.3
+-----
+- Fixed bug where blue responsive navigation would appear when gray color scheme selected
+- Fixed bug where social media links were hidden on responsive view
+- Fixed bug where primary navigation was displayed under the top nav and the drop shadow was enhanced
+- Fixed bug where property search widget would overlap navigation button on responsive view
+- Fixed hover bug on top navigation items in sub menus where hover did not extend to 100% width of list item
+
+1.0.2
+-----
+- Removed link to "dead" wordpress.org forum
+- Adjusted custom menu widget in primary sidebar
+- Added attribution to all images inside of images directory as well as Yoast Breadcrumbs
+- Removed a few images from images directory (not used in theme)
+- Added dropdowns to primary menu callback function
+- Added CSS to style children items in callback function
+- Added CSS to gray color scheme for children items
+- Added missing webfont (Oswald - Google Web Fonts)
+- Adjusted header call to widget area to ensure it was not displayed when the widget area was not active
+- Fixed bug with pagination (SDS Core)
+
+1.0.0
+-----
+- New Theme

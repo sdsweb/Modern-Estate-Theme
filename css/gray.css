@@ -184,7 +184,7 @@ section.news-block:hover{
 .blog-post-content table tr:nth-child(even), .comment-content table tr:nth-child(even) {
 	background: #e8e8e8;
 }
-.post-edit-link {
+.post-edit-link, .button {
 	color: #ebebeb;
 	background: #898989;
 	text-decoration: none;

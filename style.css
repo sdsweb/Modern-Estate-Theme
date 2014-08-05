@@ -4,7 +4,7 @@
  * Description: A sleek responsive modern real estate theme for WordPress that offers cutting-edge HTML5 and CSS3, various color schemes, page templates and more. Use the Easy Real Estate Plugin (http://github.com/sdsweb/Easy-Real-Estate-Plugin/) to add real estate functionality such as Agent Profiles, Property Listings, and Testimonials.
  * Author: Slocum Design Studio
  * Author URI: http://slocumthemes.com/
- * Version: 1.0.9
+ * Version: 1.1.9
  * License: GPL
  * License URI: http://www.gnu.org/licenses/gpl.html
  * Tags: black, blue, brown, gray, green, purple, red, silver, tan, dark, light, one-column, two-columns, right-sidebar, custom-colors, custom-menu, featured-image-header, featured-images, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready, fluid-layout, responsive-layout
@@ -346,7 +346,12 @@ section.logo-container{
 	margin: 0 0 1em;
 }
 
-section.logo-container h1 a{
+section.logo-container #title {
+	margin: 1em 0;
+	font-size: 1.15em;
+}
+
+section.logo-container #title a{
 	font-family: 'Oswald', sans-serif;
 	font-weight: 400;
 	text-transform: uppercase;
@@ -359,11 +364,12 @@ section.logo-container h1 a{
 		text-shadow: 1px 1px 1px #ffffff;
 }
 
-section.logo-container h2{
+section.logo-container #slogan {
 	text-transform: uppercase;
 	font-weight: 300;
 	color: #a1a1a1;
 	margin-top: 0;
+	margin-bottom: 0.85em;
 	padding-top: 0;
 	text-shadow: 1px 1px 1px #ffffff;
 		font: normal 22px/.8em 'Oswald', sans-serif;
@@ -596,28 +602,30 @@ nav.header-bottom ul li ul.sub-menu li ul.sub-menu, nav.header-bottom ul li ul.c
 
 nav.header-bottom ul li ul.sub-menu li, nav.header-bottom ul li ul.children li{
 	width: auto;
-	min-height: 40px;
+	min-height: 38px;
 	float: none;
 	display: block;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+	/*border-bottom: 1px solid rgba(255, 255, 255, 0.25);*/
 }
 
 nav.header-bottom ul li ul.sub-menu li a, nav.header-bottom ul li ul.children li a {
-	margin-bottom: -1px;
+	/*margin-bottom: -1px;*/
 	padding: 10px 15px;
 	float: none;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 nav.header-bottom ul li ul.sub-menu li:last-child a, nav.header-bottom ul li ul.children li:last-child a {
-	margin-bottom: 0;
-	border-bottom: none;
+	/*margin-bottom: 0;
+	border-bottom: none; */
 }
 
 nav.header-bottom ul li:hover > ul.sub-menu, nav.header-bottom ul li:hover > ul.children {
 	display: block;
+	z-index: 2;
 }
 
-nav.header-bottom ul li a:hover{
+nav.header-bottom ul li:hover > a{
 	background: rgba(255, 255, 255, .20);
 }
 
@@ -1550,8 +1558,13 @@ section.inner-block{
 	margin: 0;
 	color: #fff;
 }
+
 .blog .breadcrumb {
 	margin: 0;
+}
+
+header + .in > .breadcrumb {
+	margin-top: 1em;
 }
 
 .single-breadcrumb {
@@ -1561,6 +1574,72 @@ section.inner-block{
 .breadcrumb a {
 	color: #d8e7f5;
 }
+
+
+/* ------------------
+ * bbPress/BuddyPress
+   ------------------ */
+.bbp-breadcrumb p {
+	margin-top: 0;
+}
+
+#subscription-toggle {
+	margin-bottom: 1em;
+	float: right;
+}
+
+#bbpress-forums div.bbp-the-content-wrapper div.quicktags-toolbar {
+	overflow: auto;
+}
+
+#bbpress-forums div.bbp-the-content-wrapper input {
+	width: auto;
+	text-transform: none;
+}
+
+#bbpress-forums div.bbp-search-form {
+	margin-bottom: 1em;
+}
+
+#bbpress-forums #bbp-search-form #bbp_search {
+	width: 64%;
+	padding: 0.38em 0.30em;
+	display: inline-block;
+	border-radius: 0;
+	-webkit-border-radius: 0;
+}
+
+#bbp_search_submit {
+	width: auto;
+	padding: 0.38em 0.30em;
+	float: none;
+	display: inline-block;
+}
+
+#bbp_topic_submit {
+	padding: 0.38em 0.30em;
+	cursor: pointer;
+}
+
+#bbpress-forums fieldset.bbp-form textarea,
+#bbpress-forums fieldset.bbp-form select, #bbpress-forums fieldset.bbp-form input {
+	width: auto;
+	display: inline;
+	float: none;
+}
+
+#buddypress div.activity-comments ul li {
+	border-color: #ddd;
+}
+
+#buddypress button, #buddypress a.button, #buddypress input[type=submit],
+#buddypress input[type=button], #buddypress input[type=reset],
+#buddypress .dir-search input[type=text] {
+	width: auto;
+	float: none;
+	display: inline;
+}
+
 
 /* ------------------
   Blog Page
@@ -1830,10 +1909,10 @@ footer.agent-post-footer {
 	margin-top: 50px !important;
 }
 
-header.blog-post-header{
+header.blog-post-header {
 	width: 100%;
 	height: auto;
-	max-height: 300px;
+	/*max-height: 300px;*/
 	float: left;
 	text-align: center;
 	border-bottom: 1px solid;
@@ -1987,7 +2066,7 @@ section.blog-post-content{
 }
 
 /* Edit Post Link */
-.post-edit-link {
+.post-edit-link, .button {
 	padding: 1% 2%;
 	color: #ebedf0;
 	background: #1b2f42;
@@ -2008,12 +2087,12 @@ section.blog-post-content{
 	border-radius: 5px;
 }
 
-.post-edit-link:hover{
+.post-edit-link:hover, .button:hover {
 	-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .3);
 	box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .3);
 }
 
-.post-edit-link:active{
+.post-edit-link:active, .button:active {
 	background: #fff;
 }
 
@@ -3488,9 +3567,9 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 	}
 
 	/* Properties */
-	header.blog-post-header {
+	/*header.blog-post-header {
 		height: 236px !important;
-	}
+	}*/
 
 	.footer-block{
 		width: 25%;
@@ -3522,14 +3601,14 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 	}
 	
 	
-	section.logo-container h1 a{
+	section.logo-container #title a{
 		font-size: 36px;
 		margin-bottom: 0;
 		padding-bottom: 0;
 		line-height: .5em;
 	}
 	
-	section.logo-container h2{
+	section.logo-container #slogan {
 		font-size: 18px;
 		margin-top: 0;
 		padding-top: 0;
@@ -3845,7 +3924,7 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		float: none;
 	}
 
-	/* Submenus – optional .parent class indicates dropdowns */
+	/* Submenus ï¿½ optional .parent class indicates dropdowns */
 	nav ul.topbar-nav > li a {
 		padding-left: 20px;
 	}
@@ -3950,20 +4029,20 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		font-size: 16px;
 	}
 		
-		.header-middle section.logo-container h1{
+		.header-middle section.logo-container #title{
 			margin: 0;
 			padding: 0;
 			text-align: center;
 		}
 		
-	.header-middle section.logo-container h1 a{
+	.header-middle section.logo-container #title a{
 		font-size: 32px;
 		margin: 0;
 		padding: 0;
 		line-height: 1em;
 	}
 	
-	section.logo-container h2{
+	section.logo-container #slogan{
 		font-size: 18px;
 		text-align: center;
 		margin: 0;
@@ -3976,7 +4055,7 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 	  Bottom Navigation
 	---------------------  */
 	
-	nav.header-bottom ul.primary-nav {
+	nav.header-bottom .primary-nav {
 		width: 100%;
 		float: left;
 		background-color: #2b4c6c; /* ---- Color Change ----*/
@@ -3984,7 +4063,6 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
 		background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
 		background-image:      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
-		display: block;
 		height: 50px;
 		margin: 0;
 		padding: 0;
@@ -3997,11 +4075,11 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		clear: both;
 		display: none;
 	}
-	nav.header-bottom ul.primary-nav li {
+	nav.header-bottom .primary-nav li {
 		display: none;
 		width: 100%;
 	}
-	nav.header-bottom ul.primary-nav li a {
+	nav.header-bottom .primary-nav li a {
 		display: block;
 		width: 100%;
 		padding: 10px 5%;
@@ -4015,19 +4093,19 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		-webkit-border-radius: 0;
 		border-radius: 0;
 	}
-	nav.header-bottom ul.primary-nav li a:hover {
+	nav.header-bottom .primary-nav li a:hover {
 		background-color: rgba(0,0,0,.5);
 		border-top-color: transparent;
 		-webkit-border-radius: 0;
 		border-radius: 0;
 	}
-	nav.header-bottom ul.primary-nav > li:first-child {
+	nav.header-bottom .primary-nav > li:first-child {
 		border-top: 1px solid rgba(0,0,0,.2);
 	}
 
 	/* Toggle the navigation bar open  */
 
-	nav.header-bottom ul.primary-nav.open { 
+	nav.header-bottom .primary-nav.open {
 		height: auto;
 		position: absolute; 
 		padding-top: 0;
@@ -4035,7 +4113,11 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 		box-shadow: 0 1px 2px rgba(0,0,0,.6);
 		display: block;
 	}
-	nav.header-bottom ul.primary-nav.open li, nav.header-bottom ul.primary-nav.open li ul.sub-menu, nav.header-bottom ul.primary-nav.open li ul.sub-menu li  { 
+	nav.header-bottom .primary-nav.open li,
+	nav.header-bottom .primary-nav.open li ul.sub-menu,
+	nav.header-bottom .primary-nav.open li ul.sub-menu li,
+	nav.header-bottom .primary-nav.open li ul.children,
+	nav.header-bottom .primary-nav.open li ul.children li  {
 		display: block; 
 		/*float: none;*/ 
 		
@@ -4043,55 +4125,65 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 
 	
 	/* Submenus - optional .parent class indicates dropdowns */
-	nav.header-bottom ul.primary-nav > li a {
+	nav.header-bottom .primary-nav > li a,
+	nav.header-bottom div.primary-nav > ul > li a {
 		padding-left: 20px;
 		float: none;
 	}
-	
-	nav.header-bottom ul.primary-nav > li:hover > a {
+
+	nav.header-bottom .primary-nav > li:hover > a,
+	nav.header-bottom div.primary-nav > ul > li:hover > a {
 		background: rgba(255,255,255,.5);
 		border-bottom-color: transparent;
 	}
-	nav.header-bottom ul.primary-nav li .sub-menu > li a:after {
+
+	nav.header-bottom .primary-nav li .sub-menu > li a:after,
+	nav.header-bottom .primary-nav li .children > li a:after {
 		content: ">";
 		color: rgba(255,255,255,.5);
 		float: left;
 		margin-left: 10px;
 		padding-right: 10px;
 	}
-	nav.header-bottom ul.primary-nav li ul.sub-menu  > a:hover {
+
+	nav.header-bottom .primary-nav li ul.sub-menu > a:hover,
+	nav.header-bottom .primary-nav li ul.children > a:hover {
 		background: rgba(0,0,0,.75);
 	}
 
-	nav.header-bottom ul.primary-nav li .sub-menu li .sub-menu > li a {
-		padding-left: 20px;
+	nav.header-bottom .primary-nav li .sub-menu li .sub-menu > li a,
+	nav.header-bottom .primary-nav li .children li .children > li a {
+		width: auto;
+		padding-left: 30px;
 	}
 
-	nav.header-bottom ul.primary-nav li ul {
+	nav.header-bottom .primary-nav li ul {
 		display: none;
 		background: rgba(0,0,0,.5);
 		border-top: 0 none;
 		padding: 0;
 	}
-	nav.header-bottom ul.primary-nav li ul a {
+	nav.header-bottom .primary-nav li ul a {
 		border: 0 none;
 		font-size: 12px;
 		padding: 10px 5%;
 		font-weight: normal;
 	}
-	nav.header-bottom ul.primary-nav li:hover ul {
+	nav.header-bottom .primary-nav li:hover ul {
 		display: block;
 		border-top: 0 none;
 	}
 
-	nav.header-bottom ul.primary-nav.open li ul.sub-menu {
+	nav.header-bottom .primary-nav.open li ul.sub-menu,
+	nav.header-bottom .primary-nav.open li ul.children {
 		width: 100%;
 		position: static;
 		top: auto;
 		background: #2b4c6c;
 	}
 
-	nav.header-bottom ul.primary-nav.open li ul.sub-menu li {
+	nav.header-bottom .primary-nav.open li ul.sub-menu li,
+	nav.header-bottom .primary-nav.open li ul.children li {
 		/*min-height: auto;*/
 	}
 
@@ -4225,6 +4317,9 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 	/* ------------------
 	  Inner Home
 	---------------------  */
+	header + .in > .breadcrumb {
+		margin-top: 3em;
+	}
 
 	section.inner-block, .blog-content{
 		width: 100%;
