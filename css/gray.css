@@ -293,6 +293,26 @@ input[type=submit] {
 	background: #acacac;
 }
 
+/* WooCommerce */
+.woocommerce nav.woocommerce-pagination ul li a, .woocommerce nav.woocommerce-pagination ul li span, .woocommerce #content nav.woocommerce-pagination ul li a, .woocommerce #content nav.woocommerce-pagination ul li span, .woocommerce-page nav.woocommerce-pagination ul li a, .woocommerce-page nav.woocommerce-pagination ul li span, .woocommerce-page #content nav.woocommerce-pagination ul li a, .woocommerce-page #content nav.woocommerce-pagination ul li span {
+	background-color: #898989;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:hover, .woocommerce nav.woocommerce-pagination ul li a:focus,
+.woocommerce #content nav.woocommerce-pagination ul li a:hover, .woocommerce #content nav.woocommerce-pagination ul li a:focus,
+.woocommerce-page nav.woocommerce-pagination ul li a:hover, .woocommerce-page #content nav.woocommerce-pagination ul li a:hover,
+.woocommerce-page #content nav.woocommerce-pagination ul li a:focus {
+	background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.woocommerce nav.woocommerce-pagination ul li span.current,
+.woocommerce #content nav.woocommerce-pagination ul li span.current,
+.woocommerce-page nav.woocommerce-pagination ul li span.current,
+.woocommerce-page #content nav.woocommerce-pagination ul li span.current {
+	background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
 @media only screen and (min-width: 0px) and (max-width: 600px) {
 	nav ul.topbar-nav {
 		background-color: #acacac; /* ---- Color Change ----*/

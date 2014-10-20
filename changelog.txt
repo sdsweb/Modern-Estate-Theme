@@ -2,8 +2,19 @@
 Theme: Modern Estate Free
 Author: Slocum Themes/Slocum Design Studio
 Author URI: http://slocumthemes.com
-Current Version: 1.1.9
+Current Version: 1.2.0
 ==========================================
+
+
+1.2.0 // October 16 2014
+------------------------
+- Updated to latest version of SDS Core
+- Added CSS classes on sidebar containers for better CSS targeting (added "widgets" and "no-widgets" classes)
+- Added WooCommerce support
+- Adjusted "mc-gravity" support to allow for multiple CSS classes
+- Fixed bug where "Footer Left" sidebar was not registered due to hooking into `widgets_init` too early (previously Footer left sidebar was missing from the theme)
+- Fixed display of checkboxes and radio buttons in content areas (CSS)
+- Updated POT file
 
 1.1.9 // July 02 2014
 ---------------------

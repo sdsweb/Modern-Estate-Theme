@@ -70,7 +70,7 @@
 	</section>
 	<?php tha_entry_after(); ?>
 
-	<section class="after-posts-widgets <?php echo ( is_active_sidebar( 'after-posts-sidebar' ) ) ? 'after-posts-widgets-active' : false; ?> cf">
+	<section class="after-posts-widgets <?php echo ( is_active_sidebar( 'after-posts-sidebar' ) ) ? 'after-posts-widgets-active widgets' : 'no-widgets'; ?> cf">
 		<?php sds_after_posts_sidebar(); ?>
 	</section>
 

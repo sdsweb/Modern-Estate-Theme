@@ -4,7 +4,7 @@
  * Description: A sleek responsive modern real estate theme for WordPress that offers cutting-edge HTML5 and CSS3, various color schemes, page templates and more. Use the Easy Real Estate Plugin (http://github.com/sdsweb/Easy-Real-Estate-Plugin/) to add real estate functionality such as Agent Profiles, Property Listings, and Testimonials.
  * Author: Slocum Design Studio
  * Author URI: http://slocumthemes.com/
- * Version: 1.1.9
+ * Version: 1.2.0
  * License: GPL
  * License URI: http://www.gnu.org/licenses/gpl.html
  * Tags: black, blue, brown, gray, green, purple, red, silver, tan, dark, light, one-column, two-columns, right-sidebar, custom-colors, custom-menu, featured-image-header, featured-images, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready, fluid-layout, responsive-layout
@@ -2056,6 +2056,14 @@ section.blog-post-content{
 	-webkit-border-radius: 5px;
 }
 
+.blog-post-content input[type=checkbox],
+.blog-post-content input[type=radio] {
+	width: auto;
+	display: inline;
+	height: auto;
+	padding: 0;
+}
+
 .blog-post-content input[type=submit] {
 	height: 30px;
 	cursor: pointer;
@@ -3478,6 +3486,177 @@ form.mc-gravity, form.mc_gravity, form.mc-newsletter, form.mc_newsletter {
 	border: none;
 }
 
+
+
+/* WooCommerce */
+.woocommerce .woocommerce-breadcrumb, .woocommerce-page .woocommerce-breadcrumb {
+	margin-top: 1.5em !important;
+}
+
+.woocommerce div.product, .woocommerce #content div.product, .woocommerce-page div.product, .woocommerce-page #content div.product {
+	margin-top: 2em !important;
+}
+
+.woocommerce div.product div.images, .woocommerce #content div.product div.images, .woocommerce-page div.product div.images, .woocommerce-page #content div.product div.images {
+	width: 26.85% !important;
+}
+
+.woocommerce div.product div.summary, .woocommerce #content div.product div.summary, .woocommerce-page div.product div.summary, .woocommerce-page #content div.product div.summary {
+	width: 70.15% !important;
+}
+
+.woocommerce div.product span.price, .woocommerce div.product p.price, .woocommerce #content div.product span.price, .woocommerce #content div.product p.price, .woocommerce-page div.product span.price, .woocommerce-page div.product p.price, .woocommerce-page #content div.product span.price, .woocommerce-page #content div.product p.price {
+	font-weight: bold !important;
+}
+
+.woocommerce .woocommerce-result-count, .woocommerce-page .woocommerce-result-count {
+	float: none !important;
+}
+
+.woocommerce div.product div.images div.thumbnails a, .woocommerce #content div.product div.images div.thumbnails a, .woocommerce-page div.product div.images div.thumbnails a, .woocommerce-page #content div.product div.images div.thumbnails a,
+.woocommerce div.product .woocommerce-tabs ul.tabs li a, .woocommerce #content div.product .woocommerce-tabs ul.tabs li a, .woocommerce-page div.product .woocommerce-tabs ul.tabs li a, .woocommerce-page #content div.product .woocommerce-tabs ul.tabs li a {
+	border-bottom: none !important;
+}
+
+.woocommerce nav.woocommerce-pagination ul li,
+.woocommerce #content nav.woocommerce-pagination ul li,
+.woocommerce-page nav.woocommerce-pagination ul li,
+.woocommerce-page #content nav.woocommerce-pagination ul li {
+	margin: 0 10px 0 0;
+	padding: 0;
+	float: left;
+	display: block;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a, .woocommerce nav.woocommerce-pagination ul li span, .woocommerce #content nav.woocommerce-pagination ul li a, .woocommerce #content nav.woocommerce-pagination ul li span, .woocommerce-page nav.woocommerce-pagination ul li a, .woocommerce-page nav.woocommerce-pagination ul li span, .woocommerce-page #content nav.woocommerce-pagination ul li a, .woocommerce-page #content nav.woocommerce-pagination ul li span {
+	max-width: 94%;
+	position: relative;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: 300;
+	display: inline-block;
+	font-size: 16px;
+	color: #fff;
+	text-shadow: 1px 1px 1px #000;
+	padding: 13px 16px;
+	background-color: #234;
+	background: rgba(0, 0, 0, 0.4);
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+	margin: 5px 0 20px;
+	-webkit-transition: background .6s ease-in-out;
+	-moz-transition: background .6s ease-in-out;
+	-ms-transition: background .6s ease-in-out;
+	-o-transition: background .6s ease-in-out;
+	transition: background .6s ease-in-out;
+	word-wrap: break-word;
+}
+
+.woocommerce nav.woocommerce-pagination ul li:last-child a,
+.woocommerce nav.woocommerce-pagination ul li:last-child span,
+.woocommerce #content nav.woocommerce-pagination ul li:last-child a,
+.woocommerce #content nav.woocommerce-pagination ul li:last-child span,
+.woocommerce-page nav.woocommerce-pagination ul li:last-child a,
+.woocommerce-page nav.woocommerce-pagination ul li:last-child span,
+.woocommerce-page #content nav.woocommerce-pagination ul li:last-child a,
+.woocommerce-page #content nav.woocommerce-pagination ul li:last-child span {
+	border-right: none !important;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:hover, .woocommerce nav.woocommerce-pagination ul li a:focus,
+.woocommerce #content nav.woocommerce-pagination ul li a:hover, .woocommerce #content nav.woocommerce-pagination ul li a:focus,
+.woocommerce-page nav.woocommerce-pagination ul li a:hover, .woocommerce-page #content nav.woocommerce-pagination ul li a:hover,
+.woocommerce-page #content nav.woocommerce-pagination ul li a:focus {
+	color: #fff !important;
+	background: rgba(0, 0, 0, 0.8) !important;
+	text-decoration: underline;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:active, .woocommerce nav.woocommerce-pagination ul li a:active,
+.woocommerce #content nav.woocommerce-pagination ul li a:active, .woocommerce #content nav.woocommerce-pagination ul li a:active,
+.woocommerce-page nav.woocommerce-pagination ul li a:active, .woocommerce-page #content nav.woocommerce-pagination ul li a:active,
+.woocommerce-page #content nav.woocommerce-pagination ul li a:active {
+}
+
+.woocommerce nav.woocommerce-pagination ul li span.current,
+.woocommerce #content nav.woocommerce-pagination ul li span.current,
+.woocommerce-page nav.woocommerce-pagination ul li span.current,
+.woocommerce-page #content nav.woocommerce-pagination ul li span.current {
+	color: #fff !important;
+	background-color: #123 !important;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:active, .woocommerce nav.woocommerce-pagination ul li a:active, .woocommerce #content nav.woocommerce-pagination ul li a:active, .woocommerce #content nav.woocommerce-pagination ul li a:active, .woocommerce-page nav.woocommerce-pagination ul li a:active, .woocommerce-page nav.woocommerce-pagination ul li a:active, .woocommerce-page #content nav.woocommerce-pagination ul li a:active, .woocommerce-page #content nav.woocommerce-pagination ul li a:active {
+	color: #fff !important;
+}
+
+.woocommerce nav.woocommerce-pagination, .woocommerce #content nav.woocommerce-pagination, .woocommerce-page nav.woocommerce-pagination, .woocommerce-page #content nav.woocommerce-pagination {
+}
+
+.woocommerce nav.woocommerce-pagination ul, .woocommerce #content nav.woocommerce-pagination ul, .woocommerce-page nav.woocommerce-pagination ul, .woocommerce-page #content nav.woocommerce-pagination ul {
+	margin: 1em;
+	border: none !important;
+}
+
+.woocommerce nav.woocommerce-pagination ul li, .woocommerce #content nav.woocommerce-pagination ul li, .woocommerce-page nav.woocommerce-pagination ul li, .woocommerce-page #content nav.woocommerce-pagination ul li,
+.woocommerce table.cart .product-thumbnail a, .woocommerce table.cart .product-remove a {
+	border: none !important;
+}
+
+.woocommerce .related ul.products li.product, .woocommerce .related ul li.product, .woocommerce .upsells.products ul.products li.product, .woocommerce .upsells.products ul li.product, .woocommerce-page .related ul.products li.product, .woocommerce-page .related ul li.product, .woocommerce-page .upsells.products ul.products li.product, .woocommerce-page .upsells.products ul li.product {
+	width: 30.80% !important;
+}
+
+.woocommerce div.product form.cart .variations td.label, .woocommerce #content div.product form.cart .variations td.label, .woocommerce-page div.product form.cart .variations td.label, .woocommerce-page #content div.product form.cart .variations td.label {
+	padding-left: 0.5em !important;
+}
+
+.woocommerce div.product form.cart .variations td.value, .woocommerce #content div.product form.cart .variations td.value, .woocommerce-page div.product form.cart .variations td.value, .woocommerce-page #content div.product form.cart .variations td.value {
+	padding: 0.5em !important;
+}
+
+.woocommerce div.product span.price ins, .woocommerce div.product p.price ins, .woocommerce #content div.product span.price ins, .woocommerce #content div.product p.price ins, .woocommerce-page div.product span.price ins, .woocommerce-page div.product p.price ins, .woocommerce-page #content div.product span.price ins, .woocommerce-page #content div.product p.price ins {
+	text-decoration: none !important;
+}
+
+.woocommerce div.product form.cart .button, .woocommerce #content div.product form.cart .button, .woocommerce-page div.product form.cart .button, .woocommerce-page #content div.product form.cart .button {
+	margin-top: 1em !important;
+}
+
+.woocommerce-message, .woocommerce-error, .woocommerce-info {
+	margin: 2em 0 !important;
+}
+
+ul.woocommerce-error {
+	padding-left: 3.5em !important;
+}
+
+.woocommerce .cart .button, .woocommerce .cart input.button, .woocommerce-page .cart .button, .woocommerce-page .cart input.button {
+	margin: 0.5em 0 !important;
+}
+
+.woocommerce .cart-collaterals .cart_totals table tr:first-child th, .woocommerce .cart-collaterals .cart_totals table tr:first-child td, .woocommerce-page .cart-collaterals .cart_totals table tr:first-child th, .woocommerce-page .cart-collaterals .cart_totals table tr:first-child td {
+	border-top: 1px solid #ddd !important;
+}
+
+.woocommerce .col2-set, .woocommerce-page .col2-set {
+	margin-top: 2em !important;
+}
+
+.woocommerce table.cart td.actions .coupon .input-text,
+.woocommerce-page table.cart td.actions .coupon .input-text {
+	margin-top: 14px;
+}
+
+.woocommerce table.cart a.remove, .woocommerce-page table.cart a.remove {
+	line-height: 0.75em;
+}
+
+.woocommerce #payment ul.payment_methods li, .woocommerce-page #payment ul.payment_methods li {
+	list-style: none !important;
+}
 
 
 /* ------------------

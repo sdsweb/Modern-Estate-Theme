@@ -1,6 +1,6 @@
 <!-- Page Sidebar-->
 <?php tha_sidebars_before(); ?>
-<aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar <?php echo ( is_active_sidebar( 'primary-sidebar' ) ) ? 'widgets' : 'no-widgets'; ?>">
 	<?php tha_sidebar_top(); ?>
 
 	<?php

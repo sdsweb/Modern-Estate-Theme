@@ -6,17 +6,17 @@
 			<?php tha_footer_top(); ?>
 
 			<div class="in cf">
-				<section class="footer-blocks footer-block-1">
+				<section class="footer-blocks footer-block-1 <?php echo ( is_active_sidebar( 'footer-left-sidebar' ) ) ? 'widgets' : 'no-widgets'; ?>">
 					<?php me_footer_left_sidebar(); // Footer (vertical) ?>
 				</section>
 
-				<section class="footer-blocks footer-block-2">
+				<section class="footer-blocks footer-block-2 <?php echo ( is_active_sidebar( 'footer-sidebar' ) ) ? 'widgets' : 'no-widgets'; ?>">
 					<?php sds_footer_sidebar(); // Footer (2 columns) ?>
 				</section>
 
 				<section class="clear"></section>
 
-				<section class="copyright-area">
+				<section class="copyright-area <?php echo ( is_active_sidebar( 'copyright-area-sidebar' ) ) ? 'widgets' : 'no-widgets'; ?>">
 					<?php sds_copyright_area_sidebar(); ?>
 				</section>
 			</div>
