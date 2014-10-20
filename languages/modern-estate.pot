@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Modern Estate 1.2.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/theme/modern-estate\n"
-"POT-Creation-Date: 2014-10-16 14:34:55+00:00\n"
+"POT-Creation-Date: 2014-10-20 20:51:26+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -74,27 +74,47 @@ msgstr ""
 msgid "Upgrade Now!"
 msgstr ""
 
-#: functions.php:146 functions.php:159 functions.php:172
+#: functions.php:134
+msgid "Introducing Conductor Plugin"
+msgstr ""
+
+#: functions.php:136
+msgid "Custom Layouts"
+msgstr ""
+
+#: functions.php:137
+msgid "Custom Content Displays"
+msgstr ""
+
+#: functions.php:138
+msgid "No Code Required!"
+msgstr ""
+
+#: functions.php:141
+msgid "Get Conductor!"
+msgstr ""
+
+#: functions.php:159 functions.php:172 functions.php:185
 msgid "Upgrade to Modern Estate Pro"
 msgstr ""
 
-#: functions.php:147
+#: functions.php:160
 msgid "and receive more color schemes!"
 msgstr ""
 
-#: functions.php:160
+#: functions.php:173
 msgid "to use more web fonts!"
 msgstr ""
 
-#: functions.php:173
+#: functions.php:186
 msgid "to receive priority ticketing support!"
 msgstr ""
 
-#: functions.php:192
+#: functions.php:205
 msgid "If you'd like to create a support request, please visit the <a href=\"%1$s\">Modern Estate Forums on WordPress.org</a>."
 msgstr ""
 
-#: functions.php:201
+#: functions.php:214
 msgid "<a href=\"%1$s\">%2$s by Slocum Studio</a>"
 msgstr ""
 
