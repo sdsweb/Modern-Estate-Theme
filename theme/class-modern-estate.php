@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.2.0';
+	const ME_VERSION = '1.2.1';
 
 	private static $instance; // Keep track of the instance
 
@@ -27,6 +27,8 @@ class ModernEstate {
 		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 20 ); // Enable Featured Images, Specify additional image sizes
 		add_action( 'widgets_init', array( $this, 'widgets_init' ), 20 ); // Register sidebars
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) ); // Add Meta Boxes
+		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) ); // Used to enqueue editor styles based on post type
+		add_action( 'wp_head', array( $this, 'wp_head' ), 1 ); // Add <meta> tags to <head> section
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) ); // Enqueue all stylesheets (Main Stylesheet, Fonts, etc...)
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) ); // Responsive navigation functionality
 
@@ -179,6 +181,49 @@ class ModernEstate {
 			)
 		);
 		echo '</p>';
+	}
+
+	/**
+	 * This function adds editor styles based on post type, before TinyMCE is initialized.
+	 * It will also enqueue the correct color scheme stylesheet to better match front-end display.
+	 */
+	function pre_get_posts() {
+		global $sds_theme_options, $post;
+
+		$protocol = is_ssl() ? 'https' : 'http';
+
+		// Admin only and if we have a post
+		if ( is_admin() && ! empty( $post ) ) {
+			add_editor_style( 'css/editor-style.css' );
+
+			// Add correct color scheme if selected
+			if ( function_exists( 'sds_color_schemes' ) && ! empty( $sds_theme_options['color_scheme'] ) && $sds_theme_options['color_scheme'] !== 'default' ) {
+				$color_schemes = sds_color_schemes();
+				add_editor_style( 'css/' . $color_schemes[$sds_theme_options['color_scheme']]['stylesheet'] );
+			}
+
+			// Open Sans & Oswald Web Fonts (include only if a web font is not selected in Theme Options)
+			if ( ! function_exists( 'sds_web_fonts' ) || empty( $sds_theme_options['web_font'] ) )
+				add_editor_style( str_replace( ',', '%2C', $protocol . '://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Oswald:400,300' ) ); // Google WebFonts (Open Sans & Oswald)
+
+			// Fetch page template if any on Pages only
+			if ( $post->post_type === 'page' )
+				$wp_page_template = get_post_meta( $post->ID,'_wp_page_template', true );
+		}
+
+		// Admin only and if we have a post using our full page or landing page templates
+		if ( is_admin() && ! empty( $post ) && ( isset( $wp_page_template ) && ( $wp_page_template === 'page-full-width.php' || $wp_page_template === 'page-landing-page.php' ) ) )
+			add_editor_style( 'css/editor-style-full-width.css' );
+	}
+
+	/**
+	 * This function adds <meta> tags to the <head> element.
+	 */
+	function wp_head() {
+	?>
+		<meta charset="<?php bloginfo( 'charset' ); ?>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<?php
 	}
 
 	/*
@@ -397,12 +442,16 @@ class ModernEstate {
 	 * .mc-gravity, .mc_gravity, .mc-newsletter, .mc_newsletter classes
 	 */
 	function gform_field_input( $input, $field, $value, $lead_id, $form_id ) {
-		$form_meta = RGFormsModel::get_form_meta( $form_id );
-		$form_css_classes = explode( ' ', $form_meta['cssClass'] );
+		$form_meta = RGFormsModel::get_form_meta( $form_id ); // Get form meta
 
-		// Ensure the current form has one of our supported classes and alter the field accordingly if we're not on admin
-		if ( isset( $form['cssClass'] ) && ! is_admin() && in_array( $form_css_classes, array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
-			$input = '<div class="ginput_container"><input name="input_' . $field['id'] . '" id="input_' . $form_id . '_' . $field['id'] . '" type="text" value="" class="large" placeholder="' . $field['label'] . '" /></div>';
+		// Ensure we have at least one CSS class
+		if ( isset( $form_meta['cssClass'] ) ) {
+			$form_css_classes = explode( ' ', $form_meta['cssClass'] );
+
+			// Ensure the current form has one of our supported classes and alter the field accordingly if we're not on admin
+			if ( ! is_admin() && array_intersect( $form_css_classes, array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+				$input = '<div class="ginput_container"><input name="input_' . $field['id'] . '" id="input_' . $form_id . '_' . $field['id'] . '" type="text" value="" class="large" placeholder="' . $field['label'] . '" /></div>';
+		}
 
 		return $input;
 	}
@@ -412,11 +461,14 @@ class ModernEstate {
 	 * .mc-gravity, .mc_gravity, .mc-newsletter, .mc_newsletter classes
 	 */
 	function gform_confirmation( $confirmation, $form, $lead, $ajax ) {
-		$form_css_classes = explode( ' ', $form['cssClass'] );
+		// Ensure we have at least one CSS class
+		if ( isset( $form['cssClass'] ) ) {
+			$form_css_classes = explode( ' ', $form['cssClass'] );
 
-		// Confirmation message is set and form has one of our supported classes (alter the confirmation accordingly)
-		if ( isset( $form['cssClass'] ) && $form['confirmation']['type'] === 'message' && in_array( $form_css_classes, array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
-			$confirmation = '<section class="mc-gravity-confirmation mc_gravity-confirmation mc-newsletter-confirmation mc_newsletter-confirmation">' . $confirmation . '</section>';
+			// Confirmation message is set and form has one of our supported classes (alter the confirmation accordingly)
+			if ( $form['confirmation']['type'] === 'message' && array_intersect( $form_css_classes, array( 'mc-gravity', 'mc_gravity', 'mc-newsletter', 'mc_newsletter' ) ) )
+				$confirmation = '<div class="mc-gravity-confirmation mc_gravity-confirmation mc-newsletter-confirmation mc_newsletter-confirmation">' . $confirmation . '</div>';
+		}
 
 		return $confirmation;
 	}

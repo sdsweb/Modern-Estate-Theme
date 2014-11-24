@@ -7,10 +7,6 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html><!--<![endif]-->
 	<head>
 		<?php tha_head_top(); ?>
-		<title><?php wp_title( '| ', true, 'right' ); ?></title>
-		<meta charset="<?php bloginfo( 'charset' ); ?>" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
 		<?php tha_head_bottom(); ?>
 		<?php wp_head(); ?>		
 	</head>

@@ -7,7 +7,7 @@
  * Load the theme function files (options panel, theme functions, widgets, etc...).
  */
 
-include_once get_template_directory() . '/includes/ModernEstate.php'; // Modern Estate Class (main functionality, actions/filters)
+include_once get_template_directory() . '/theme/class-modern-estate.php'; // Modern Estate Class (main functionality, actions/filters)
 
 include_once get_template_directory() . '/includes/class-tgm-plugin-activation.php'; // TGM Activation
 
@@ -93,7 +93,7 @@ if ( ! function_exists( 'sds_theme_options_default_featured_image_size' ) ) {
  * This function adds the custom Theme Customizer styles to the <head> tag.
  */
 if ( ! function_exists( 'me_wp_head' ) ) {
-	add_filter( 'wp_head', 'me_wp_head', 20 );
+	add_action( 'wp_head', 'me_wp_head', 20 );
 
 	function me_wp_head() {
 		$sds_theme_options_instance = SDS_Theme_Options_Instance();
