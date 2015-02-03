@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.2.1';
+	const ME_VERSION = '1.2.2';
 
 	private static $instance; // Keep track of the instance
 
@@ -19,7 +19,6 @@ class ModernEstate {
 	}
 
 
-
 	/**
 	 * This function sets up all of the actions and filters on instance
 	 */
@@ -29,6 +28,7 @@ class ModernEstate {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) ); // Add Meta Boxes
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) ); // Used to enqueue editor styles based on post type
 		add_action( 'wp_head', array( $this, 'wp_head' ), 1 ); // Add <meta> tags to <head> section
+		add_action( 'tiny_mce_before_init', array( $this, 'tiny_mce_before_init' ), 10, 2 ); // Output TinyMCE Setup function
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) ); // Enqueue all stylesheets (Main Stylesheet, Fonts, etc...)
 		add_action( 'wp_footer', array( $this, 'wp_footer' ) ); // Responsive navigation functionality
 
@@ -193,7 +193,7 @@ class ModernEstate {
 		$protocol = is_ssl() ? 'https' : 'http';
 
 		// Admin only and if we have a post
-		if ( is_admin() && ! empty( $post ) ) {
+		if ( is_admin() ) {
 			add_editor_style( 'css/editor-style.css' );
 
 			// Add correct color scheme if selected
@@ -207,7 +207,7 @@ class ModernEstate {
 				add_editor_style( str_replace( ',', '%2C', $protocol . '://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Oswald:400,300' ) ); // Google WebFonts (Open Sans & Oswald)
 
 			// Fetch page template if any on Pages only
-			if ( $post->post_type === 'page' )
+			if ( ! empty( $post ) && $post->post_type === 'page' )
 				$wp_page_template = get_post_meta( $post->ID,'_wp_page_template', true );
 		}
 
@@ -224,6 +224,52 @@ class ModernEstate {
 		<meta charset="<?php bloginfo( 'charset' ); ?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<?php
+	}
+
+	/**
+	 * This function prints scripts after TinyMCE has been initialized for dynamic CSS in the
+	 * content editor based on page template dropdown selection.
+	 */
+	function tiny_mce_before_init( $mceInit, $editor_id ) {
+		$max_width = 920;
+
+		// Only on the admin 'content' editor
+		if ( is_admin() && ! isset( $mceInit['setup'] ) && $editor_id === 'content' ) {
+			$mceInit['setup'] = 'function( editor ) {
+				// Editor init
+ 				editor.on( "init", function( e ) {
+ 					// Only on the "content" editor (other editors can inherit the setup function on init)
+ 					if( editor.id === "content" ) {
+						var $page_template = jQuery( "#page_template" ),
+							full_width_templates = ["page-full-width.php", "page-landing-page.php"],
+							$content_editor_head = jQuery( editor.getDoc() ).find( "head" );
+
+						// If the page template dropdown exists
+						if ( $page_template.length ) {
+							// When the page template dropdown changes
+							$page_template.on( "change", function() {
+								// Is this a full width template?
+								if ( full_width_templates.indexOf( $page_template.val() ) !== -1 ) {
+									// Add dynamic CSS
+									if( $content_editor_head.find( "#' . get_template() . '-editor-css" ).length === 0 ) {
+										$content_editor_head.append( "<style type=\'text/css\' id=\'' . get_template() . '-editor-css\'> body, body.wp-autoresize { max-width: ' . $max_width . 'px; } </style>" );
+									}
+								}
+								else {
+									// Add dynamic CSS
+									$content_editor_head.find( "#' . get_template() . '-editor-css" ).remove();
+
+									// If the full width style was added on TinyMCE Init, remove it
+									$content_editor_head.find( "link[href=\'' . get_template_directory_uri() . '/css/editor-style-full-width.css\']" ).remove();
+								}
+							} );
+						}
+					}
+				} );
+			}';
+		}
+
+		return $mceInit;
 	}
 
 	/*

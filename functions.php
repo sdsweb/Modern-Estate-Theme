@@ -200,7 +200,7 @@ function sds_get_pro_link( $content ) {
 if ( ! function_exists( 'sds_theme_options_help_support_tab_content' ) ) {
 	add_action( 'sds_theme_options_help_support_tab_content', 'sds_theme_options_help_support_tab_content' );
 
-	function sds_theme_options_help_support_tab_content( ) {
+	function sds_theme_options_help_support_tab_content() {
 	?>
 		<p><?php printf( __( 'If you\'d like to create a support request, please visit the <a href="%1$s">Modern Estate Forums on WordPress.org</a>.', 'modern-estate' ), esc_url( 'http://wordpress.org/support/theme/modern-estate/' ) ); ?></p>
 	<?php
@@ -211,6 +211,6 @@ if ( ! function_exists( 'sds_copyright_branding' ) ) {
 	add_filter( 'sds_copyright_branding', 'sds_copyright_branding', 10, 2 );
 
 	function sds_copyright_branding( $text, $theme_name ) {
-		return sprintf( __( '<a href="%1$s">%2$s by Slocum Studio</a>', 'modern-estate' ), esc_url( 'http://slocumthemes.com/wordpress-themes/modern-estate-free/' ), $theme_name );
+		return sprintf( __( '<a href="%1$s">%2$s by Slocum Studio</a>', 'modern-estate' ), esc_url( 'https://slocumthemes.com/wordpress-themes/modern-estate-free/' ), $theme_name );
 	}
 }
