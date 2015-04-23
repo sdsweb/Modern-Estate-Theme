@@ -3,7 +3,7 @@
  * This class manages all functionality with our Modern Estate theme.
  */
 class ModernEstate {
-	const ME_VERSION = '1.2.2';
+	const ME_VERSION = '1.2.3';
 
 	private static $instance; // Keep track of the instance
 
