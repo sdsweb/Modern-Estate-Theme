@@ -57,3 +57,9 @@
  * License: GPL2
  * Copyright: Doug Stewart, http://literalbarrage.org/
  */
+
+/**
+ * SDS Core - /includes/
+ * License: GPL2
+ * Copyright: Slocum Design Studio, http://slocumstudio.com/
+ */
