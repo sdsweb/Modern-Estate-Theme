@@ -9,7 +9,7 @@ get_header(); ?>
 
 	<section class="inner-content cf">
 		<?php tha_content_before(); ?>
-		<section class="blog-content content-wrapper cf">
+		<section id="content-container" class="blog-content content-wrapper cf">
 			<?php tha_content_top(); ?>
 
 			<?php get_template_part( 'loop', 'page' ); // Loop - Page ?>
