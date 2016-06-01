@@ -116,6 +116,14 @@ strong{
 	clear: both;
 }
 
+ol {
+    padding-left: 0;
+    margin-left: 1em;
+}
+
+ul {
+    margin-left: 1em;
+}
 
 /**
  * WordPress Core CSS - http://codex.wordpress.org/CSS#WordPress_Generated_Classes
@@ -319,6 +327,7 @@ nav ul.topbar-nav li ul.sub-menu li:last-child a {
 
 nav ul.topbar-nav li:hover > ul.sub-menu {
 	display: block;
+	z-index: 100;
 }
 
 nav ul.topbar-nav li a:hover, nav.social-media ul li a:hover {
@@ -496,7 +505,8 @@ section.header-cta-container .agents-widget .agent {
 
 /* Sidebar */
 #sidebar ul {
-	list-style: none;
+	/*list-style: none;*/
+    list-style-type: disc;
 }
 
 #sidebar .sub-menu {
@@ -504,9 +514,9 @@ section.header-cta-container .agents-widget .agent {
 	margin-left: 1em;
 }
 
-#sidebar ul li {
+/*#sidebar ul li {
 	margin-bottom: 10px;
-}
+}*/
 
 
 /* Sidebar - Search */
@@ -2005,7 +2015,8 @@ section.blog-post-content{
 }
 
 .blog-post-content ul{
-	margin-left: 30px;
+	/*margin-left: 30px;*/
+    margin-left: 1em;
 }
 
 .blog-post-content ul > li{
@@ -2413,11 +2424,13 @@ aside#property-sidebar section.sidebar-block section.sidebar-top{
 }
 
 #sidebar ul {
-	list-style: none;
+	/*list-style: none;*/
+    list-style-type: disc;
 }
 
 #sidebar ul li {
-	margin-bottom: 10px;
+	/*margin-bottom: 10px;*/
+    margin-bottom: 0;
 }
 
 
